@@ -21,4 +21,11 @@ add_executable(
 		src/char_array.c
 )
 
+add_executable(
+		http_parser_test
+		test/http_parser_test.c
+		src/http_parser.c
+)
+
 add_test(NAME TestCharArray COMMAND char_array_test)
+add_test(NAME TestHttpParser COMMAND http_parser_test)
