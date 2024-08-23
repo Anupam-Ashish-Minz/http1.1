@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "chararray.h"
+#include "char_array.h"
 
 void push_char_array(struct VecCharArray vec, struct CharArray *arr) {
 	if (vec.arr == NULL) {

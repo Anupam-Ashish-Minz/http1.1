@@ -4,7 +4,7 @@
 #include <unistd.h>
 #include <netinet/in.h>
 #include <sys/socket.h>
-#include "chararray.h"
+#include "char_array.h"
 
 #define PORT 4000
 #define MSBUF_MXLEN 1048576
