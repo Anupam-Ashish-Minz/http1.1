@@ -6,6 +6,8 @@ include(CTest)
 
 include_directories(${CMAKE_SOURCE_DIR}/src ${CMAKE_SOURCE_DIR}/test)
 
+set(CMAKE_BUILD_TYPE Debug)
+
 add_executable(
 		${CMAKE_PROJECT_NAME} 
 		src/main.c 
@@ -18,4 +20,4 @@ add_executable(
 		src/char_array.c
 )
 
-add_test(NAME TestPushCharArray COMMAND char_array_test)
+add_test(NAME TestCharArray COMMAND char_array_test)

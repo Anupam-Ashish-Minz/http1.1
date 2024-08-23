@@ -12,6 +12,7 @@ struct VecCharArray {
 	unsigned int max_len;
 };
 
-void push_char_array(struct VecCharArray vec, struct CharArray *arr);
+struct VecCharArray new_vec_char_array();
+void push_char_array(struct VecCharArray *vec, struct CharArray *arr);
 
 #endif
