@@ -13,7 +13,7 @@
 
 #define ASSERT_EQ_STR(a, b)                                                    \
 	if (strcmp(a, b)) {                                                        \
-		fprintf(stderr, "Assert failed: %s, %s\nactual: %s, expected: %s\n",   \
+		fprintf(stderr, "Assert failed: %s, %s\nexpected: %s, actual: %s\n",   \
 				#a, #b, a, b);                                                 \
 		exit(-1);                                                              \
 	}
