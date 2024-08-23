@@ -4,37 +4,10 @@
 #include <unistd.h>
 #include <netinet/in.h>
 #include <sys/socket.h>
+#include "chararray.h"
 
 #define PORT 4000
 #define MSBUF_MXLEN 1048576
-
-struct CharArray {
-	char *line;
-	unsigned int size;
-};
-
-struct CharArray *new_char_array(char *line, unsigned int size) {
-	struct CharArray *arr = (struct CharArray *)malloc(sizeof(struct CharArray));
-	arr->line = line;
-	arr->size = size;
-	return arr;
-}
-
-int set_char_array(struct CharArray *arr, char *line, unsigned int size) {
-	arr = (struct CharArray *)malloc(sizeof(struct CharArray));
-	arr->line = line;
-	arr->size = size;
-	return 0;
-}
-
-struct VecCharArray {
-	struct CharArray **arr;
-	unsigned int len;
-};
-
-void push_char_array(struct CharArray **vec, struct CharArray *arr) {
-	vec[0] = arr;
-}
 
 struct HttpPacket {
 	char *method;
