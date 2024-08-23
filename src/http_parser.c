@@ -1,25 +1,35 @@
 #include "http_parser.h"
+#include "char_array.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
 
-void parse_http(char *buf, size_t buflen) {
-	// get / http/1.1\r\n
-	// host: localhost:4000
-	// user-agent: curl/8.6.0
-	// Accept: */*
-	
+struct VecCharArray split_lines(char *lines, size_t size) {
+	struct VecCharArray vlines = new_vec_char_array();
 	int prev = 0;
-	for (int i=0; i<buflen-1; i++) {
-		if (buf[i] == '\r' && buf[i+1] == '\n') {
-			if (prev == i) {
-				continue;
-			}
-			char *line = malloc(i - prev);
-			strncpy(line, &buf[prev], i - prev);
-			printf("->%s\n", line);
+
+	for (int i=0; i<size-1; i++) {
+		if (lines[i] == '\r' && lines[i+1] == '\n') {
+			struct CharArray *line = (struct CharArray *)malloc(sizeof(struct CharArray));
+			line->line = (char *)malloc(i - prev);
+			line->size = i - prev;
+			strncpy(line->line, &lines[prev], i - prev);
+			push_char_array(&vlines, line);
 			prev = i+2;
 		}
 	}
+	if (prev < size) {
+		struct CharArray *line = (struct CharArray *)malloc(sizeof(struct CharArray));
+		line->line = (char *)malloc(size - prev);
+		line->size = size - prev;
+		strncpy(line->line, &lines[prev], size - prev);
+		push_char_array(&vlines, line);
+		prev = size;
+	}
+
+	return vlines;
+}
+
+void parse_http(char *buf, size_t buflen) {
 }
