@@ -42,9 +42,26 @@ void test_push_101_item() {
 	ASSERT_EQ(vec.max_len, 110);
 }
 
+void test_inner_str() {
+	struct VecCharArray vec = new_vec_char_array();
+	struct CharArray *arr =
+		(struct CharArray *)malloc(sizeof(struct CharArray));
+	char *str = "hello world";
+	arr->line = str;
+	arr->size = sizeof(str);
+	push_char_array(&vec, arr);
+	if (strcmp(vec.arr[0]->line, str) != 0) {
+		fprintf(stderr,
+				"String don't match test failed, output: \"%s\", expected: "
+				"\"%s\"\n",
+				vec.arr[0]->line, str);
+	}
+}
+
 int main(int argc, char **argv) {
 	test_push_1_item();
 	test_push_101_item();
+	test_inner_str();
 
 	return 0;
 }
