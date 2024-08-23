@@ -5,34 +5,10 @@
 #include <netinet/in.h>
 #include <sys/socket.h>
 #include "char_array.h"
+#include "http_parser.h"
 
 #define PORT 4000
 #define MSBUF_MXLEN 1048576
-
-struct HttpPacket {
-	char *method;
-	char *path;
-	char *protocol;
-	char **headers;
-};
-
-void parse_http(char *buf, size_t buflen) {
-// GET / HTTP/1.1
-// Host: localhost:4000
-// User-Agent: curl/8.6.0
-// Accept: */*
-	int split_at = -1;
-	struct CharArray *filelines[5];
-
-	int prev = 0;
-	for (int i=0; i<buflen-1; i++) {
-		if (buf[i] == '\r' && buf[i+1] == '\n') {
-			split_at = i;
-			char *line = (char *)malloc(i-1-prev); 
-			strncpy(line, &buf[prev], i-1);
-		}
-	}
-}
 
 int main() {
 	int server, client;

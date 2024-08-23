@@ -12,6 +12,7 @@ add_executable(
 		${CMAKE_PROJECT_NAME} 
 		src/main.c 
 		src/char_array.c
+		src/http_parser.c
 )
 
 add_executable(
