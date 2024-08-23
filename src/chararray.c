@@ -2,20 +2,16 @@
 #include <stdlib.h>
 #include "chararray.h"
 
-struct CharArray *new_char_array(char *line, unsigned int size) {
-	struct CharArray *arr = (struct CharArray *)malloc(sizeof(struct CharArray));
-	arr->line = line;
-	arr->size = size;
-	return arr;
-}
-
-int set_char_array(struct CharArray *arr, char *line, unsigned int size) {
-	arr = (struct CharArray *)malloc(sizeof(struct CharArray));
-	arr->line = line;
-	arr->size = size;
-	return 0;
-}
-
-void push_char_array(struct CharArray **vec, struct CharArray *arr) {
-	vec[0] = arr;
+void push_char_array(struct VecCharArray vec, struct CharArray *arr) {
+	if (vec.arr == NULL) {
+		vec.arr = (struct CharArray **)malloc(10 * sizeof(struct CharArray *));
+		vec.len = 0;
+		vec.max_len = 10;
+	}
+	if (vec.len-1 == vec.max_len) {
+		vec.arr = (struct CharArray **)realloc(vec.arr, (vec.max_len + 10) * sizeof(struct CharArray *));
+		vec.max_len += 10;
+	}
+	vec.arr[vec.len] = arr;
+	vec.len += 1;
 }

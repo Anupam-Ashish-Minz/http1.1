@@ -9,10 +9,9 @@ struct CharArray {
 struct VecCharArray {
 	struct CharArray **arr;
 	unsigned int len;
+	unsigned int max_len;
 };
 
-struct CharArray *new_char_array(char *line, unsigned int size);
-int set_char_array(struct CharArray *arr, char *line, unsigned int size);
-void push_char_array(struct CharArray **vec, struct CharArray *arr);
+void push_char_array(struct VecCharArray vec, struct CharArray *arr);
 
 #endif

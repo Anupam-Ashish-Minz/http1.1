@@ -30,7 +30,6 @@ void parse_http(char *buf, size_t buflen) {
 			split_at = i;
 			char *line = (char *)malloc(i-1-prev); 
 			strncpy(line, &buf[prev], i-1);
-			push_char_array(filelines, new_char_array(line, i-1-prev));
 		}
 	}
 }
