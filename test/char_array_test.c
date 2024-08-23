@@ -1,8 +1,8 @@
+#include "char_array.h"
 #include <stdio.h>
 #include <stdlib.h>
-#include "char_array.h"
 
-int main(int argc, char **argv) {
+void test_push_1_item() {
 	struct VecCharArray vec = new_vec_char_array();
 
 	struct CharArray *arr =
@@ -11,9 +11,13 @@ int main(int argc, char **argv) {
 	push_char_array(&vec, arr);
 
 	if (vec.len != 1) {
-		fprintf(stderr, "vector length 1 != %d\n", vec.len); 
-		return -1;
+		fprintf(stderr, "vector length 1 != %d\n", vec.len);
+		exit(-1);
 	}
+}
+
+int main(int argc, char **argv) {
+	test_push_1_item();
 
 	return 0;
 }
