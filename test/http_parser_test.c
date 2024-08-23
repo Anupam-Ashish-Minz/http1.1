@@ -1,5 +1,6 @@
 #include "http_parser.h"
 #include "char_array.h"
+#include "utils.h"
 #include <string.h>
 #include <stdio.h>
 
@@ -7,6 +8,7 @@ void test_split_line() {
 	char *lines = "line number 1\r\n"
 		"line number 2";
 	struct VecCharArray vec = split_lines(lines, strlen(lines));
+	ASSERT_EQ_STR(vec.arr[0]->line, "line number 1");
 }
 
 void test_split_black_line() {
