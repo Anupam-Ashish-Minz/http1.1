@@ -34,12 +34,7 @@ void test_inner_str() {
 	arr->line = str;
 	arr->size = sizeof(str);
 	push_char_array(&vec, arr);
-	if (strcmp(vec.arr[0]->line, str) != 0) {
-		fprintf(stderr,
-				"String don't match test failed, output: \"%s\", expected: "
-				"\"%s\"\n",
-				vec.arr[0]->line, str);
-	}
+	ASSERT_EQ_STR(vec.arr[0]->line, str);
 }
 
 int main(int argc, char **argv) {
