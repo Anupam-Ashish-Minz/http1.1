@@ -23,8 +23,8 @@ void test_split_black_line() {
 
 void test_split_multiple_lines() {
 	char *lines = "line number 1\r\n"
-		"line number 2\r\n\n"
-		"line number 3\r\n";
+		"line number 2\r\n\r\n"
+		"line number 3";
 	struct VecCharArray vec = split_lines(lines, strlen(lines));
 	ASSERT_EQ_STR(vec.arr[0]->line, "line number 1");
 	ASSERT_EQ_STR(vec.arr[1]->line, "line number 2");

@@ -15,6 +15,7 @@ struct VecCharArray split_lines(char *lines, size_t size) {
 			line->line = (char *)malloc(i - prev);
 			line->size = i - prev;
 			strncpy(line->line, &lines[prev], i - prev);
+			printf("->%s<-\n", line->line);
 			push_char_array(&vlines, line);
 			prev = i+2;
 		}
@@ -24,6 +25,7 @@ struct VecCharArray split_lines(char *lines, size_t size) {
 		line->line = (char *)malloc(size - prev);
 		line->size = size - prev;
 		strncpy(line->line, &lines[prev], size - prev);
+		printf("->%s<-\n", line->line);
 		push_char_array(&vlines, line);
 		prev = size;
 	}
