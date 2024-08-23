@@ -26,14 +26,8 @@ void test_push_101_item() {
 	for (int i = 0; i < 102; i++) {
 		push_char_array(&vec, arr);
 	}
-	if (vec.len != 102) {
-		fprintf(stderr, "vector length 101 != %d\n", vec.len);
-		exit(-1);
-	}
-	if (vec.max_len != 110) {
-		fprintf(stderr, "vector max length 110 != %d\n", vec.max_len);
-		exit(-1);
-	}
+	ASSERT_EQ(vec.len, 102);
+	ASSERT_EQ(vec.max_len, 110);
 }
 
 int main(int argc, char **argv) {
