@@ -7,7 +7,8 @@
 
 #define ASSERT_EQ(a, b)                                                        \
 	if (a != b) {                                                              \
-		fprintf(stderr, "Assert failed: %s, %s\n", #a, #b);                    \
+		fprintf(stderr, "Assert failed: %s, %s\nvalues %d, %d\n", #a, #b, a,   \
+				b);                                                            \
 		exit(-1);                                                              \
 	}
 
