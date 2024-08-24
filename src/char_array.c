@@ -68,7 +68,8 @@ struct CharArray *push_char_array(struct CharArray *vec, unsigned int *vec_len, 
 		vec = (struct CharArray *)realloc(vec, (VECBUF * sizeof(struct CharArray)) + *vec_len);
 	}
 	vec[*vec_len] = c;
-	vec_len += 1;
+	*vec_len += 1;
+	return vec;
 }
 
 struct CharArray *split_lines(char *lines, size_t size) {
