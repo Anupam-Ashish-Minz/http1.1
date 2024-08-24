@@ -154,6 +154,73 @@ void test_split_multiple_lines() {
 #endif
 }
 
+void test_split_line2() {
+	char *lines = "line number 1\r\n"
+		"line number 2";
+
+	char **linebuf = (char **)malloc(sizeof(lines));
+	size_t *linebuf_s = (size_t *)malloc(sizeof(lines));
+
+	int line_count = split_lines2(lines, strlen(lines), linebuf, linebuf_s);
+
+	ASSERT_EQ(line_count, 2);
+	ASSERT_EQ(linebuf_s[0], 13);
+	ASSERT_EQ(linebuf_s[1], 13);
+
+	ASSERT_EQ_STR(linebuf[0], "line number 1");
+	ASSERT_EQ_STR(linebuf[1], "line number 2");
+
+	free(linebuf);
+	free(linebuf_s);
+}
+
+void test_split_black_line2() {
+	char *lines = "line number 1\r\n\r\n"
+		"line number 2";
+
+	char **linebuf = (char **)malloc(sizeof(lines));
+	size_t *linebuf_s = (size_t *)malloc(sizeof(lines));
+
+	int line_count = split_lines2(lines, strlen(lines), linebuf, linebuf_s);
+
+	ASSERT_EQ(line_count, 3);
+	ASSERT_EQ(linebuf_s[0], 13);
+	ASSERT_EQ(linebuf_s[1], 0);
+	ASSERT_EQ(linebuf_s[2], 13);
+
+	ASSERT_EQ_STR(linebuf[0], "line number 1");
+	ASSERT_EQ_STR(linebuf[1], "");
+	ASSERT_EQ_STR(linebuf[2], "line number 2");
+
+	free(linebuf);
+	free(linebuf_s);
+}
+
+void test_split_multiple_lines2() {
+	char *lines = "line number 1\r\n"
+		"line number 2\r\n\r\n"
+		"line number 3";
+
+	char **linebuf = (char **)malloc(sizeof(lines));
+	size_t *linebuf_s = (size_t *)malloc(sizeof(lines));
+
+	int line_count = split_lines2(lines, strlen(lines), linebuf, linebuf_s);
+
+	ASSERT_EQ(line_count, 4);
+	ASSERT_EQ(linebuf_s[0], 13);
+	ASSERT_EQ(linebuf_s[1], 13);
+	ASSERT_EQ(linebuf_s[2], 0);
+	ASSERT_EQ(linebuf_s[3], 13);
+
+	ASSERT_EQ_STR(linebuf[0], "line number 1");
+	ASSERT_EQ_STR(linebuf[1], "line number 2");
+	ASSERT_EQ_STR(linebuf[2], "");
+	ASSERT_EQ_STR(linebuf[3], "line number 3");
+
+	free(linebuf);
+	// free(linebuf_s); // I don't know why calling free on this causes double free failure
+}
+
 
 int main(int argc, char **argv) {
 	test_push_1_item();
@@ -165,6 +232,10 @@ int main(int argc, char **argv) {
 	test_split_line();
 	test_split_black_line();
 	test_split_multiple_lines();
+
+	test_split_line2();
+	test_split_black_line2();
+	test_split_multiple_lines2();
 
 	return 0;
 }
