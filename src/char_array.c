@@ -64,8 +64,8 @@ struct CharArray *push_char_array(struct CharArray *vec, unsigned int *vec_len, 
 	if (vec == NULL) {
 		vec = (struct CharArray *)malloc(VECBUF * sizeof(struct CharArray));
 		*vec_len = 0;
-	} else if (*vec_len > 0 && *vec_len % VECBUF == 0) {
-		vec = (struct CharArray *)realloc(vec, (VECBUF * sizeof(struct CharArray)) + *vec_len);
+	} else if (*vec_len % VECBUF == 0) {
+		vec = (struct CharArray *)realloc(vec, (*vec_len + VECBUF) * sizeof(struct CharArray));
 	}
 	vec[*vec_len] = c;
 	*vec_len += 1;
@@ -80,9 +80,14 @@ struct CharArray *split_lines(char *lines, size_t size) {
 	for (int i=0; i<size-1; i++) {
 		if (lines[i] == '\r' && lines[i+1] == '\n') {
 			struct CharArray line;
-			line.line = (char *)malloc(i - prev);
-			line.size = i - prev;
-			strncpy(line.line, &lines[prev], i - prev);
+			if (i == prev) {
+				line.line = "";
+				line.size = 0;
+			} else {
+				line.line = (char *)malloc(i - prev);
+				line.size = i - prev;
+				strncpy(line.line, &lines[prev], i - prev);
+			}
 			vec = push_char_array(vec, &vec_len, line);
 			prev = i+2;
 		}

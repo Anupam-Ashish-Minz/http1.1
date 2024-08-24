@@ -69,6 +69,35 @@ void test_inner_str() {
 	ASSERT_EQ_STR(vec[0].line, str);
 }
 
+void test_empty_str() {
+	struct CharArray *vec = NULL;
+	struct CharArray c;
+	char *str = "";
+	c.line = str;
+	c.size = sizeof(str);
+	unsigned int vec_len = 0;
+	vec = push_char_array(vec, &vec_len, c);
+	ASSERT_EQ_STR(vec[0].line, str);
+}
+
+void test_multi_str_insert() {
+	struct CharArray *vec = NULL;
+	struct CharArray c;
+	char *str = "hey";
+	c.line = str;
+	c.size = sizeof(str);
+	unsigned int vec_len = 0;
+	vec = push_char_array(vec, &vec_len, c);
+
+	struct CharArray d;
+	char *str2 = "";
+	d.line = str2;
+	d.size = sizeof(str2);
+	vec = push_char_array(vec, &vec_len, d);
+	ASSERT_EQ_STR(vec[0].line, str);
+	ASSERT_EQ_STR(vec[1].line, str2);
+}
+
 #endif
 
 void test_split_line() {
@@ -113,6 +142,11 @@ void test_split_multiple_lines() {
 	ASSERT_EQ_STR(vec.arr[3]->line, "line number 3");
 #elif CHARARR == 2
 	struct CharArray *vec = split_lines(lines, strlen(lines));
+	ASSERT_EQ(vec[0].size, 13);
+	ASSERT_EQ(vec[1].size, 13);
+	ASSERT_EQ(vec[2].size, 0);
+	ASSERT_EQ(vec[3].size, 13);
+
 	ASSERT_EQ_STR(vec[0].line, "line number 1");
 	ASSERT_EQ_STR(vec[1].line, "line number 2");
 	ASSERT_EQ_STR(vec[2].line, "");
@@ -125,6 +159,8 @@ int main(int argc, char **argv) {
 	test_push_1_item();
 	test_push_101_item();
 	test_inner_str();
+	test_empty_str();
+	test_multi_str_insert();
 
 	test_split_line();
 	test_split_black_line();
