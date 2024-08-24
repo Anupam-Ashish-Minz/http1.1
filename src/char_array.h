@@ -34,7 +34,6 @@ struct CharArray {
 	unsigned int size;
 };
 
-struct VecCharArray new_vec_char_array();
 struct CharArray *push_char_array(struct CharArray *vec, unsigned int *vec_len, struct CharArray c);
 struct CharArray *split_lines(char *lines, size_t size);
 
