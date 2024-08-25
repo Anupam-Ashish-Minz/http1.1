@@ -36,7 +36,7 @@ struct CharArray {
 
 struct CharArray *push_char_array(struct CharArray *vec, unsigned int *vec_len, struct CharArray c);
 struct CharArray *split_lines(char *lines, size_t size);
-int split_lines2(char *lines, size_t size, char **ret, size_t *ret_s);
+int split_lines2(char *lines, int size, char **ret, int *ret_s);
 
 #endif
 #endif

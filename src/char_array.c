@@ -104,7 +104,7 @@ struct CharArray *split_lines(char *lines, size_t size) {
 	return vec;
 }
 
-int split_lines2(char *lines, size_t size, char **ret, size_t *ret_s) {
+int split_lines2(char *lines, int size, char **ret, int *ret_s) {
 	int prev = 0;
 	int k = 0;
 	for (int i=0; i<size-1; i++) {

@@ -159,7 +159,7 @@ void test_split_line2() {
 		"line number 2";
 
 	char **buf = (char **)malloc(sizeof(lines));
-	size_t *buf_s = (size_t *)malloc(sizeof(lines) * sizeof(size_t));
+	int *buf_s = (int *)malloc(sizeof(lines) * sizeof(int));
 
 	int line_count = split_lines2(lines, strlen(lines), buf, buf_s);
 
@@ -179,7 +179,7 @@ void test_split_black_line2() {
 		"line number 2";
 
 	char **buf = (char **)malloc(sizeof(lines));
-	size_t *buf_s = (size_t *)malloc(sizeof(lines) * sizeof(size_t));
+	int *buf_s = (int *)malloc(sizeof(lines) * sizeof(int));
 
 	int line_count = split_lines2(lines, strlen(lines), buf, buf_s);
 
@@ -202,7 +202,7 @@ void test_split_multiple_lines2() {
 		"line number 3";
 
 	char **buf = (char **)malloc(sizeof(lines));
-	size_t *buf_s = (size_t *)malloc(sizeof(lines) * sizeof(size_t));
+	int *buf_s = (int *)malloc(sizeof(lines) * sizeof(int));
 
 	int line_count = split_lines2(lines, strlen(lines), buf, buf_s);
 
