@@ -224,6 +224,30 @@ void test_split_multiple_lines2() {
 	// free(linebuf_s); // I don't know why calling free on this causes double free failure
 }
 
+void test_split_by_word() {
+	char *line = "hello world this is a line";
+	int line_s =  strlen(line);
+	char **buf = (char **)malloc(line_s);
+	int *buf_s = (int *)malloc(line_s * sizeof(int)); 
+
+	int word_count = split_by_words(line, line_s, buf, buf_s);
+
+	ASSERT_EQ_STR(buf[0], "hello");
+	ASSERT_EQ_STR(buf[1], "world");
+	ASSERT_EQ_STR(buf[2], "this");
+	ASSERT_EQ_STR(buf[3], "is");
+	ASSERT_EQ_STR(buf[4], "a");
+	ASSERT_EQ_STR(buf[5], "line");
+
+	ASSERT_EQ(buf_s[0], 5);
+	ASSERT_EQ(buf_s[1], 5);
+	ASSERT_EQ(buf_s[2], 4);
+	ASSERT_EQ(buf_s[3], 2);
+	ASSERT_EQ(buf_s[4], 1);
+	ASSERT_EQ(buf_s[5], 4);
+
+	ASSERT_EQ(word_count, 6);
+}
 
 int main(int argc, char **argv) {
 	test_push_1_item();
@@ -239,6 +263,8 @@ int main(int argc, char **argv) {
 	test_split_line2();
 	test_split_black_line2();
 	test_split_multiple_lines2();
+
+	test_split_by_word();
 
 	return 0;
 }

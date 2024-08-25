@@ -39,4 +39,7 @@ struct CharArray *split_lines(char *lines, size_t size);
 int split_lines2(char *lines, int size, char **ret, int *ret_s);
 
 #endif
+
+int split_by_words(char *line, int size, char **ret, int *ret_s);
+
 #endif

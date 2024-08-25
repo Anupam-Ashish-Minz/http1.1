@@ -139,3 +139,25 @@ int split_lines2(char *lines, int size, char **ret, int *ret_s) {
 }
 
 #endif
+
+int split_by_words(char *line, int size, char **buf, int *buf_s) {
+	int k = 0;
+	int prev = 0;
+	for (int i = 0; i < size; i++) {
+		if (line[i] == ' ') {
+			if (i == prev) continue;
+			buf_s[k] = i - prev;
+			buf[k] = (char *)malloc(buf_s[k]);
+			strncpy(buf[k], &line[prev], buf_s[k]);
+			prev = i + 1;
+			++k;
+		}
+	}
+	if (prev < size) {
+		buf_s[k] = size - prev;
+		buf[k] = (char *)malloc(buf_s[k]);
+		strncpy(buf[k], &line[prev], buf_s[k]);
+		++k;
+	}
+	return k;
+}
