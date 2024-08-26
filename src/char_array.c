@@ -73,7 +73,7 @@ int get_word_count(char *buf, size_t size) {
 		return 0;
 	}
 	int count = 1;
-	for (int i=0; i<size; i++) {
+	for (unsigned long int i=0; i<size; i++) {
 		if (buf[i] == ' ') {
 			++count;
 		}
