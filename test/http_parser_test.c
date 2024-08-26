@@ -12,11 +12,12 @@ void test_parse_simple_get_request() {
 
 	struct HttpRequest request;
 	parse_http_request(raw_req, strlen(raw_req), &request);
+
+	ASSERT_EQ(request.method, GET);
 }
 
 void test_parse_post_request() {
-
-	char *request="POST / HTTP/1.1\r\n"
+	char *raw = "POST / HTTP/1.1\r\n"
 		"Host: localhost:4000\r\n"
 		"User-Agent: curl/8.6.0\r\n"
 		"Accept: */*\r\n"
@@ -24,7 +25,8 @@ void test_parse_post_request() {
 		"Content-Length: 61\r\n\r\n"
 		"{\"name\": \"amy\", \"email\":\"alice@mail.com\", \"password\": \"pass\"}\r\n";
 
-	parse_http(request, strlen(request));
+	struct HttpRequest request;
+	parse_http_request(raw, strlen(raw), &request);
 }
 
 int main() {
