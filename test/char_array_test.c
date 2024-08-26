@@ -103,12 +103,29 @@ void test_split_by_word() {
 	free(buf_s);
 }
 
+void test_word_count() {
+	char *lines = "line number 1\r\nline number 2";
+	int line_count = get_line_count(lines, strlen(lines));
+	ASSERT_EQ(line_count, 2);
+}
+
+void test_word_count_blank_lines() {
+	char *lines = "line number 1\r\n"
+		"line number 2\r\n\r\n"
+		"line number 3";
+	int line_count = get_line_count(lines, strlen(lines));
+	ASSERT_EQ(line_count, 4);
+}
+
 int main() {
 	test_split_line2();
 	test_split_black_line2();
 	test_split_multiple_lines2();
 
 	test_split_by_word();
+
+	test_word_count();
+	test_word_count_blank_lines();
 
 	return 0;
 }

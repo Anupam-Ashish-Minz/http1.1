@@ -54,3 +54,16 @@ int split_by_words(char *line, int size, char **buf, int *buf_s) {
 	}
 	return k;
 }
+
+int get_line_count(char *buf, size_t size) {
+	if (strcmp(buf, "") == 0) {
+		return 0;
+	}
+	int count = 1;
+	for (long unsigned int i=0; i<size-1; i++) {
+		if (buf[i] == '\r' && buf[i+1] == '\n') {
+			count += 1;
+		}
+	}
+	return count;
+}
