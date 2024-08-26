@@ -46,6 +46,7 @@ void test_push_1_item() {
 	unsigned int vec_len = 0;
 	vec = push_char_array(vec, &vec_len, c);
 	ASSERT_EQ(vec_len, 1);
+	free(vec);
 }
 
 void test_push_101_item() {
@@ -56,6 +57,7 @@ void test_push_101_item() {
 		vec = push_char_array(vec, &vec_len, c);
 	}
 	ASSERT_EQ(vec_len, 102);
+	free(vec);
 }
 
 void test_inner_str() {
@@ -67,6 +69,7 @@ void test_inner_str() {
 	unsigned int vec_len = 0;
 	vec = push_char_array(vec, &vec_len, c);
 	ASSERT_EQ_STR(vec[0].line, str);
+	free(vec);
 }
 
 void test_empty_str() {
@@ -78,6 +81,7 @@ void test_empty_str() {
 	unsigned int vec_len = 0;
 	vec = push_char_array(vec, &vec_len, c);
 	ASSERT_EQ_STR(vec[0].line, str);
+	free(vec);
 }
 
 void test_multi_str_insert() {
@@ -96,6 +100,7 @@ void test_multi_str_insert() {
 	vec = push_char_array(vec, &vec_len, d);
 	ASSERT_EQ_STR(vec[0].line, str);
 	ASSERT_EQ_STR(vec[1].line, str2);
+	free(vec);
 }
 
 #endif
@@ -111,6 +116,7 @@ void test_split_line() {
 	struct CharArray *vec = split_lines(lines, strlen(lines));
 	ASSERT_EQ_STR(vec[0].line, "line number 1");
 	ASSERT_EQ_STR(vec[1].line, "line number 2");
+	free(vec);
 #endif
 }
 
@@ -127,6 +133,7 @@ void test_split_black_line() {
 	ASSERT_EQ_STR(vec[0].line, "line number 1");
 	ASSERT_EQ_STR(vec[1].line, "");
 	ASSERT_EQ_STR(vec[2].line, "line number 2");
+	free(vec);
 #endif
 }
 
@@ -151,6 +158,7 @@ void test_split_multiple_lines() {
 	ASSERT_EQ_STR(vec[1].line, "line number 2");
 	ASSERT_EQ_STR(vec[2].line, "");
 	ASSERT_EQ_STR(vec[3].line, "line number 3");
+	free(vec);
 #endif
 }
 
@@ -172,7 +180,7 @@ void test_split_line2() {
 	ASSERT_EQ_STR(buf[1], "line number 2");
 
 	free(buf);
-	// free(buf_s);
+	free(buf_s);
 }
 
 void test_split_black_line2() {
@@ -195,7 +203,7 @@ void test_split_black_line2() {
 	ASSERT_EQ_STR(buf[2], "line number 2");
 
 	free(buf);
-	// free(buf_s);
+	free(buf_s);
 }
 
 void test_split_multiple_lines2() {
@@ -221,7 +229,7 @@ void test_split_multiple_lines2() {
 	ASSERT_EQ_STR(buf[3], "line number 3");
 
 	free(buf);
-	// free(linebuf_s); // I don't know why calling free on this causes double free failure
+	free(buf_s);
 }
 
 void test_split_by_word() {
@@ -247,6 +255,9 @@ void test_split_by_word() {
 	ASSERT_EQ(buf_s[5], 4);
 
 	ASSERT_EQ(word_count, 6);
+
+	free(buf);
+	free(buf_s);
 }
 
 int main(int argc, char **argv) {
