@@ -7,7 +7,7 @@ include(CTest)
 include_directories(${CMAKE_SOURCE_DIR}/src ${CMAKE_SOURCE_DIR}/test)
 
 set(CMAKE_BUILD_TYPE Debug)
-set(CMAKE_C_FLAGS "-Wall -Wextra -fsanitize=address")
+set(CMAKE_C_FLAGS "-fsanitize=address")
 
 add_executable(
 		${CMAKE_PROJECT_NAME} 
