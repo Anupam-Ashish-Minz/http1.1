@@ -11,9 +11,14 @@ void test_parse_simple_get_request() {
 		"Accept: */*\r\n";
 
 	struct HttpRequest request;
-	parse_http_request(raw_req, strlen(raw_req), &request);
+	int status = parse_http_request(raw_req, strlen(raw_req), &request);
+	if (status != 0) {
+		fprintf(stderr, "failed to parse to http request\n");
+		exit(-1);
+	}
 
 	ASSERT_EQ(request.method, GET);
+	ASSERT_EQ_STR(request.path, "/");
 }
 
 void test_parse_post_request() {
@@ -26,9 +31,14 @@ void test_parse_post_request() {
 		"{\"name\": \"amy\", \"email\":\"alice@mail.com\", \"password\": \"pass\"}\r\n";
 
 	struct HttpRequest request;
-	parse_http_request(raw, strlen(raw), &request);
+	int status = parse_http_request(raw, strlen(raw), &request);
+	if (status != 0) {
+		fprintf(stderr, "failed to parse http request\n");
+		exit(-1);
+	}
 
 	ASSERT_EQ(request.method, POST);
+	ASSERT_EQ_STR(request.path, "/");
 }
 
 int main() {
