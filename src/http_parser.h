@@ -4,9 +4,19 @@
 #include "char_array.h"
 #include <stddef.h>
 
-struct HttpPackat {
+enum HTTP_METHOD {
+	GET,
+	POST,
+	PUT,
+	DELETE,
 };
 
-void parse_http(char *buf, size_t buflen);
+struct HttpRequest {
+	enum HTTP_METHOD method;
+	char *path;
+	size_t path_s;
+};
+
+int parse_http_request(char *request, size_t request_s, struct HttpRequest *ret);
 
 #endif

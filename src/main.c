@@ -43,7 +43,7 @@ int main() {
 			perror("accept");
 		}
 		size_t msg_size = read(client, buf, MSBUF_MXLEN);
-		parse_http(buf, msg_size);
+		// parse_http(buf, msg_size);
 
 		printf("%s\n", buf);
 		write(client, "hi", 2);

@@ -5,12 +5,13 @@
 #include <stdio.h>
 
 void test_parse_simple_get_request() {
-	char *request = "get / http/1.1\r\n"
+	char *raw_req = "get / http/1.1\r\n"
 		"host: localhost:4000\r\n"
 		"user-agent: curl/8.6.0\r\n"
 		"Accept: */*\r\n";
 
-	parse_http(request, strlen(request));
+	struct HttpRequest request;
+	parse_http_request(raw_req, strlen(raw_req), &request);
 }
 
 void test_parse_post_request() {
@@ -27,7 +28,7 @@ void test_parse_post_request() {
 }
 
 int main() {
-	// test_parse_simple_get_request();
+	test_parse_simple_get_request();
 	// test_parse_post_request();
 
 	return 0;

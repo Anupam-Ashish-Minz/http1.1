@@ -2,17 +2,38 @@
 #include "char_array.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
-void parse_http(char *request, size_t request_s) {
-	int line_count = get_line_count(request, request_s);
-	char **buf = (char **)malloc(line_count * sizeof(char **));
-	int *buf_s = (int *)malloc(line_count * sizeof(int *));
-	int split_line_count = split_lines2(request, request_s, buf, buf_s);
-	if (line_count != split_line_count) {
-		printf("line count does not match\n");
-	} else {
-		for (int i=0; i<line_count; i++) {
-			printf("%s\n", buf[i]);
-		}
+int parse_http_request(char *raw, size_t raw_s, struct HttpRequest *out) {
+	int line_count = get_line_count(raw, raw_s);
+	char **lines = (char **)malloc(line_count * sizeof(char **));
+	int *lines_index = (int *)malloc(line_count * sizeof(int *));
+	line_count = split_lines2(raw, raw_s, lines, lines_index);
+	if (line_count == 0) {
+		fprintf(stderr, "incorrect http package incorrect number of line: %d",
+				line_count);
+		return -1;
 	}
+
+	int word_count = get_word_count(lines[0], lines_index[0]);
+	char **words = (char **)malloc(word_count * sizeof(char **));
+	int *words_index = (int *)malloc(word_count * sizeof(int *));
+	word_count = split_by_words(lines[0], lines_index[0], words, words_index);
+	if (word_count == 0) {
+		fprintf(stderr, "incorrect word count should be 3, is %d\n",
+				word_count);
+		return -1;
+	}
+
+	if (strncmp(words[0], "get", words_index[0]) == 0 ||
+		strncmp(words[0], "Get", words_index[0]) == 0 ||
+		strncmp(words[0], "GET", words_index[0]) == 0) {
+		out->method = GET;
+	}
+	out->path = (char *)malloc(words_index[1] + 1);
+	strncpy(out->path, words[1], words_index[1]);
+	out->path += '\0';
+	out->path_s = words_index[1] + 1;
+
+	return 0;
 }
