@@ -166,7 +166,6 @@ void test_split_line2() {
 	char *lines = "line number 1\r\n"
 		"line number 2";
 	int orig_line_count = 2;
-	int lines_s = strlen(lines);
 
 	char **buf = (char **)malloc(orig_line_count * sizeof(char **));
 	int *buf_s = (int *)malloc(orig_line_count * sizeof(int));
@@ -187,7 +186,6 @@ void test_split_line2() {
 void test_split_black_line2() {
 	char *lines = "line number 1\r\n\r\n"
 		"line number 2";
-	int lines_s = strlen(lines);
 	int orig_line_count = 3;
 
 	char **buf = (char **)malloc(orig_line_count * sizeof(char **));
@@ -212,7 +210,6 @@ void test_split_multiple_lines2() {
 	char *lines = "line number 1\r\n"
 		"line number 2\r\n\r\n"
 		"line number 3";
-	int lines_s = strlen(lines);
 	int orig_line_count = 4;
 
 	char **buf = (char **)malloc(orig_line_count * sizeof(char **));
@@ -264,7 +261,7 @@ void test_split_by_word() {
 	free(buf_s);
 }
 
-int main(int argc, char **argv) {
+int main() {
 	test_push_1_item();
 	test_push_101_item();
 	test_inner_str();
