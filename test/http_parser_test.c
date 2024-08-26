@@ -27,11 +27,13 @@ void test_parse_post_request() {
 
 	struct HttpRequest request;
 	parse_http_request(raw, strlen(raw), &request);
+
+	ASSERT_EQ(request.method, POST);
 }
 
 int main() {
 	test_parse_simple_get_request();
-	// test_parse_post_request();
+	test_parse_post_request();
 
 	return 0;
 }

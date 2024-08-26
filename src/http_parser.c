@@ -29,6 +29,21 @@ int parse_http_request(char *raw, size_t raw_s, struct HttpRequest *out) {
 		strncmp(words[0], "Get", words_index[0]) == 0 ||
 		strncmp(words[0], "GET", words_index[0]) == 0) {
 		out->method = GET;
+	} else if (strncmp(words[0], "post", words_index[0]) == 0 || 
+		strncmp(words[0], "Post", words_index[0]) == 0 || 
+		strncmp(words[0], "POST", words_index[0]) == 0) {
+		out->method = POST;
+	} else if (strncmp(words[0], "put", words_index[0]) == 0 || 
+		strncmp(words[0], "Put", words_index[0]) == 0 || 
+		strncmp(words[0], "PUT", words_index[0]) == 0) {
+		out->method = PUT;
+	} else if (strncmp(words[0], "delete", words_index[0]) == 0 || 
+		strncmp(words[0], "Delete", words_index[0]) == 0 || 
+		strncmp(words[0], "DELETE", words_index[0]) == 0) {
+		out->method = DELETE;
+	} else {
+		fprintf(stderr, "invalid method type parsing failed\n");
+		return -1;
 	}
 	out->path = (char *)malloc(words_index[1] + 1);
 	strncpy(out->path, words[1], words_index[1]);
