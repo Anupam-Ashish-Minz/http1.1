@@ -104,7 +104,7 @@ struct CharArray *split_lines(char *lines, size_t size) {
 	return vec;
 }
 
-int split_lines2(char *lines, int size, char **ret, int *ret_s) {
+int split_lines2(char *lines, int size, char **buf, int *buf_s) {
 	int prev = 0;
 	int k = 0;
 	for (int i=0; i<size-1; i++) {
@@ -112,26 +112,24 @@ int split_lines2(char *lines, int size, char **ret, int *ret_s) {
 			char *line;
 			unsigned int line_s;
 			if (i == prev) {
-				line = "";
+				line = NULL;
 				line_s = 0;
 			} else {
+				line = &lines[prev];
 				line_s = i - prev;
-				line = (char *)malloc(line_s);
-				strncpy(line, &lines[prev], line_s);
 			}
-			ret[k] = line;
-			ret_s[k] = line_s;
+			buf[k] = line;
+			buf_s[k] = line_s;
 			++k;
 			prev = i+2;
 		}
 	}
 	if (prev < size) {
 		char *line;
-		unsigned int line_s = size - prev;
-		line = (char *)malloc(line_s);
-		strncpy(line, &lines[prev], line_s);
-		ret[k] = line;
-		ret_s[k] = line_s;
+		int line_s = size - prev;
+		line = &lines[prev];
+		buf[k] = line;
+		buf_s[k] = line_s;
 		++k;
 		prev = size;
 	}
