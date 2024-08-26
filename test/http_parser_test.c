@@ -26,7 +26,7 @@ void test_parse_post_request() {
 	parse_http(request, strlen(request));
 }
 
-int main(int argc, char **argv) {
+int main() {
 	// test_parse_simple_get_request();
 	// test_parse_post_request();
 
