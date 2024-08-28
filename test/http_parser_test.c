@@ -49,6 +49,7 @@ void test_header_parser() {
 	parse_header(data, s_data, NULL, &request_headers, NULL);
 
 	ASSERT_EQ_STR(request_headers.Accept, "*");
+	ASSERT_EQ((int)request_headers.s_Accept, 2);
 }
 
 int main() {
