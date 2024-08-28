@@ -16,6 +16,7 @@ enum HTTP_VERSION {
 };
 
 struct GeneralHeaders {
+	char *Cache_Control;
 	char *Connection;
 	char *Date;
 	char *Pragma;
@@ -24,14 +25,15 @@ struct GeneralHeaders {
 	char *Upgrade;
 	char *Via;
 	char *Warning;
-	size_t Connection_s;
-	size_t Date_s;
-	size_t Pragma_s;
-	size_t Trailer_s;
-	size_t Tranfer_Encoding_s;
-	size_t Upgrade_s;
-	size_t Via_s;
-	size_t Warning_s;
+	size_t s_Cache_Control;
+	size_t s_Connection;
+	size_t s_Date;
+	size_t s_Pragma;
+	size_t s_Trailer;
+	size_t s_Tranfer_Encoding;
+	size_t s_Upgrade;
+	size_t s_Via;
+	size_t s_Warning_s;
 };
 
 struct RequestHeaders {
@@ -44,15 +46,35 @@ struct RequestHeaders {
 	char *From;
 	char *Host;
 	char *If_Match;
-	size_t Accept_Charset_s;
-	size_t Accept_Encoding_s;
-	size_t Accept_Language_s;
-	size_t Accept_s;
-	size_t Authorization_s;
-	size_t Except_s;
-	size_t From_s;
-	size_t Host_s;
-	size_t If_Match_s;
+	char *If_Modified_Since;
+	char *If_None_Match;
+	char *If_Range;
+	char *If_Unmodified_Since;
+	char *Max_Forwards;
+	char *Proxy_Authorization;
+	char *Range;
+	char *Referer;
+	char *TE;
+	char *User_Agent;
+	size_t s_Accept;
+	size_t s_Accept_Charset;
+	size_t s_Accept_Encoding;
+	size_t s_Accept_Language;
+	size_t s_Authorization;
+	size_t s_Except;
+	size_t s_From;
+	size_t s_Host;
+	size_t s_If_Match;
+	size_t s_If_Modified_Since;
+	size_t s_If_None_Match;
+	size_t s_If_Range;
+	size_t s_If_Unmodified_Since;
+	size_t s_Max_Forwards;
+	size_t s_Proxy_Authorization;
+	size_t s_Range;
+	size_t s_Referer;
+	size_t s_TE;
+	size_t s_User_Agent;
 };
 
 struct EntityHeaders {
@@ -67,17 +89,17 @@ struct EntityHeaders {
 	char *Expires;
 	char *Last_Modified;
 	char *Extension_Header;
-	size_t Allow_s;
-	size_t Content_Encoding_s;
-	size_t Content_Language_s;
-	size_t Content_Length_s;
-	size_t Content_Location_s;
-	size_t Content_MD5_s;
-	size_t Content_Range_s;
-	size_t Content_Type_s;
-	size_t Expires_s;
-	size_t Extension_Header_s;
-	size_t Last_Modified_s;
+	size_t s_Allow;
+	size_t s_Content_Encoding;
+	size_t s_Content_Language;
+	size_t s_Content_Length;
+	size_t s_Content_Location;
+	size_t s_Content_MD5;
+	size_t s_Content_Range;
+	size_t s_Content_Type;
+	size_t s_Expires;
+	size_t s_Extension_Header;
+	size_t s_Last_Modified_s;
 };
 
 struct HttpRequest {
