@@ -42,7 +42,7 @@ struct RequestHeaders {
 	char *Accept_Encoding;
 	char *Accept_Language;
 	char *Authorization;
-	char *Except;
+	char *Expect;
 	char *From;
 	char *Host;
 	char *If_Match;
@@ -61,7 +61,7 @@ struct RequestHeaders {
 	size_t s_Accept_Encoding;
 	size_t s_Accept_Language;
 	size_t s_Authorization;
-	size_t s_Except;
+	size_t s_Expect;
 	size_t s_From;
 	size_t s_Host;
 	size_t s_If_Match;
@@ -113,5 +113,10 @@ struct HttpRequest {
 };
 
 int parse_http_request(char *request, size_t request_s, struct HttpRequest *ret);
+
+int parse_header(char *header, size_t s_header,
+				 struct GeneralHeaders *general_headers,
+				 struct RequestHeaders *request_headers,
+				 struct EntityHeaders *entity_headers);
 
 #endif

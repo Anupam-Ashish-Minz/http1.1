@@ -55,6 +55,26 @@ int split_by_words(char *line, int size, char **buf, int *buf_index) {
 	return k;
 }
 
+int split_by(char *line, int size, char ctrl, char **buf, int *buf_index) {
+	int k = 0;
+	int prev = 0;
+	for (int i = 0; i < size; i++) {
+		if (line[i] == ctrl) {
+			if (i == prev) continue;
+			buf_index[k] = i - prev;
+			buf[k] = &line[prev];
+			prev = i + 1;
+			++k;
+		}
+	}
+	if (prev < size) {
+		buf_index[k] = size - prev;
+		buf[k] = &line[prev];
+		++k;
+	}
+	return k;
+}
+
 int get_line_count(char *buf, size_t size) {
 	if (strcmp(buf, "") == 0) {
 		return 0;
@@ -75,6 +95,19 @@ int get_word_count(char *buf, size_t size) {
 	int count = 1;
 	for (unsigned long int i=0; i<size; i++) {
 		if (buf[i] == ' ') {
+			++count;
+		}
+	}
+	return count;
+}
+
+int get_split_count(char *buf, size_t size, char ctrl) {
+	if (size == 0) {
+		return 0;
+	}
+	int count = 1;
+	for (unsigned long int i=0; i<size; i++) {
+		if (buf[i] == ctrl) {
 			++count;
 		}
 	}

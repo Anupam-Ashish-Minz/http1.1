@@ -52,3 +52,138 @@ int parse_http_request(char *raw, size_t raw_s, struct HttpRequest *out) {
 
 	return 0;
 }
+
+
+int parse_header(char *header, size_t s_header,
+				 struct GeneralHeaders *general_headers,
+				 struct RequestHeaders *request_headers,
+				 struct EntityHeaders *entity_headers) {
+
+
+	int split_count = get_split_count(header, s_header, ':');
+	char **out = (char **)malloc(s_header * sizeof(char)); // TODO fix the size late
+	int *out_lens = (int *)malloc(split_count * sizeof(int));
+
+	int word_count = split_by(header, s_header, ':', out, out_lens);
+	char *header_name = out[0];
+	size_t s_header_name = out_lens[0];
+	char *header_body = out[1];
+	size_t s_header_body = out_lens[1];
+
+	if (word_count == 0) {
+		return -1;
+	}
+	if (general_headers != NULL) {
+		if (strncmp(header_name, "Cache-Control", s_header_name) == 0) {
+			general_headers->Cache_Control = (char *)malloc(s_header_body);
+			strncpy(general_headers->Cache_Control, header_body, s_header_body);
+			general_headers->s_Cache_Control = s_header_body;
+		}
+	}
+	if (request_headers != NULL) {
+		if (strncmp(header_name, "Accept", s_header_name) == 0) {
+			request_headers->Accept = (char *)malloc(s_header_body);
+			strncpy(request_headers->Accept, header_body, s_header_body);
+			request_headers->s_Accept = s_header_body;
+		}
+		if (strncmp(header_name, "Accept", s_header_name) == 0) {
+			request_headers->Accept = (char *)malloc(s_header_body);
+			strncpy(request_headers->Accept, header_body, s_header_body);
+			request_headers->s_Accept = s_header_body;
+		}
+		if (strncmp(header_name, "Accept-Charset", s_header_name) == 0) {
+			request_headers->Accept_Charset = (char *)malloc(s_header_body);
+			strncpy(request_headers->Accept_Charset, header_body, s_header_body);
+			request_headers->s_Accept_Charset = s_header_body;
+		}
+		if (strncmp(header_name, "Accept-Encoding", s_header_name) == 0) {
+			request_headers->Accept_Encoding = (char *)malloc(s_header_body);
+			strncpy(request_headers->Accept_Encoding, header_body, s_header_body);
+			request_headers->s_Accept_Encoding = s_header_body;
+		}
+		if (strncmp(header_name, "Accept-Language", s_header_name) == 0) {
+			request_headers->Accept_Language = (char *)malloc(s_header_body);
+			strncpy(request_headers->Accept_Language, header_body, s_header_body);
+			request_headers->s_Accept_Language = s_header_body;
+		}
+		if (strncmp(header_name, "Authorization", s_header_name) == 0) {
+			request_headers->Authorization = (char *)malloc(s_header_body);
+			strncpy(request_headers->Authorization, header_body, s_header_body);
+			request_headers->s_Authorization = s_header_body;
+		}
+		if (strncmp(header_name, "Expect", s_header_name) == 0) {
+			request_headers->Expect = (char *)malloc(s_header_body);
+			strncpy(request_headers->Expect, header_body, s_header_body);
+			request_headers->s_Expect = s_header_body;
+		}
+		if (strncmp(header_name, "From", s_header_name) == 0) {
+			request_headers->From = (char *)malloc(s_header_body);
+			strncpy(request_headers->From, header_body, s_header_body);
+			request_headers->s_From = s_header_body;
+		}
+		if (strncmp(header_name, "Host", s_header_name) == 0) {
+			request_headers->Host = (char *)malloc(s_header_body);
+			strncpy(request_headers->Host, header_body, s_header_body);
+			request_headers->s_Host = s_header_body;
+		}
+		if (strncmp(header_name, "If-Match", s_header_name) == 0) {
+			request_headers->If_Match = (char *)malloc(s_header_body);
+			strncpy(request_headers->If_Match, header_body, s_header_body);
+			request_headers->s_If_Match = s_header_body;
+		}
+		if (strncmp(header_name, "If-Modified-Since", s_header_name) == 0) {
+			request_headers->If_Modified_Since = (char *)malloc(s_header_body);
+			strncpy(request_headers->If_Modified_Since, header_body, s_header_body);
+			request_headers->s_If_Modified_Since = s_header_body;
+		}
+		if (strncmp(header_name, "If-None-Match", s_header_name) == 0) {
+			request_headers->If_None_Match = (char *)malloc(s_header_body);
+			strncpy(request_headers->If_None_Match, header_body, s_header_body);
+			request_headers->s_If_None_Match = s_header_body;
+		}
+		if (strncmp(header_name, "If-Range", s_header_name) == 0) {
+			request_headers->If_Range = (char *)malloc(s_header_body);
+			strncpy(request_headers->If_Range, header_body, s_header_body);
+			request_headers->s_If_Range = s_header_body;
+		}
+		if (strncmp(header_name, "If-Unmodified-Since", s_header_name) == 0) {
+			request_headers->If_Unmodified_Since = (char *)malloc(s_header_body);
+			strncpy(request_headers->If_Unmodified_Since, header_body, s_header_body);
+			request_headers->s_If_Unmodified_Since = s_header_body;
+		}
+		if (strncmp(header_name, "Max-Forwards", s_header_name) == 0) {
+			request_headers->Max_Forwards = (char *)malloc(s_header_body);
+			strncpy(request_headers->Max_Forwards, header_body, s_header_body);
+			request_headers->s_Max_Forwards = s_header_body;
+		}
+		if (strncmp(header_name, "Proxy-Authorization", s_header_name) == 0) {
+			request_headers->Proxy_Authorization = (char *)malloc(s_header_body);
+			strncpy(request_headers->Proxy_Authorization, header_body, s_header_body);
+			request_headers->s_Proxy_Authorization = s_header_body;
+		}
+		if (strncmp(header_name, "Range", s_header_name) == 0) {
+			request_headers->Range = (char *)malloc(s_header_body);
+			strncpy(request_headers->Range, header_body, s_header_body);
+			request_headers->s_Range = s_header_body;
+		}
+		if (strncmp(header_name, "Referer", s_header_name) == 0) {
+			request_headers->Referer = (char *)malloc(s_header_body);
+			strncpy(request_headers->Referer, header_body, s_header_body);
+			request_headers->s_Referer = s_header_body;
+		}
+		if (strncmp(header_name, "TE", s_header_name) == 0) {
+			request_headers->TE = (char *)malloc(s_header_body);
+			strncpy(request_headers->TE, header_body, s_header_body);
+			request_headers->s_TE = s_header_body;
+		}
+		if (strncmp(header_name, "User-Agent", s_header_name) == 0) {
+			request_headers->User_Agent = (char *)malloc(s_header_body);
+			strncpy(request_headers->User_Agent, header_body, s_header_body);
+			request_headers->s_User_Agent = s_header_body;
+		}
+	}
+
+	free(out);
+	free(out_lens);
+}
+
