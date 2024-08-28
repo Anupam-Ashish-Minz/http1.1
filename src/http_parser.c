@@ -79,13 +79,48 @@ int parse_header(char *header, size_t s_header,
 			strncpy(general_headers->Cache_Control, header_body, s_header_body);
 			general_headers->s_Cache_Control = s_header_body;
 		}
+		if (strncmp(header_name, "Connection", s_header_name) == 0) {
+			general_headers->Connection = (char *)malloc(s_header_body);
+			strncpy(general_headers->Connection, header_body, s_header_body);
+			general_headers->s_Connection = s_header_body;
+		}
+		if (strncmp(header_name, "Date", s_header_name) == 0) {
+			general_headers->Date = (char *)malloc(s_header_body);
+			strncpy(general_headers->Date, header_body, s_header_body);
+			general_headers->s_Date = s_header_body;
+		}
+		if (strncmp(header_name, "Pragma", s_header_name) == 0) {
+			general_headers->Pragma = (char *)malloc(s_header_body);
+			strncpy(general_headers->Pragma, header_body, s_header_body);
+			general_headers->s_Pragma = s_header_body;
+		}
+		if (strncmp(header_name, "Trailer", s_header_name) == 0) {
+			general_headers->Trailer = (char *)malloc(s_header_body);
+			strncpy(general_headers->Trailer, header_body, s_header_body);
+			general_headers->s_Trailer = s_header_body;
+		}
+		if (strncmp(header_name, "Transfer-Encoding", s_header_name) == 0) {
+			general_headers->Transfer_Encoding = (char *)malloc(s_header_body);
+			strncpy(general_headers->Transfer_Encoding, header_body, s_header_body);
+			general_headers->s_Transfer_Encoding = s_header_body;
+		}
+		if (strncmp(header_name, "Upgrade", s_header_name) == 0) {
+			general_headers->Upgrade = (char *)malloc(s_header_body);
+			strncpy(general_headers->Upgrade, header_body, s_header_body);
+			general_headers->s_Upgrade = s_header_body;
+		}
+		if (strncmp(header_name, "Via", s_header_name) == 0) {
+			general_headers->Via = (char *)malloc(s_header_body);
+			strncpy(general_headers->Via, header_body, s_header_body);
+			general_headers->s_Via = s_header_body;
+		}
+		if (strncmp(header_name, "Warning", s_header_name) == 0) {
+			general_headers->Warning = (char *)malloc(s_header_body);
+			strncpy(general_headers->Warning, header_body, s_header_body);
+			general_headers->s_Warning = s_header_body;
+		}
 	}
 	if (request_headers != NULL) {
-		if (strncmp(header_name, "Accept", s_header_name) == 0) {
-			request_headers->Accept = (char *)malloc(s_header_body);
-			strncpy(request_headers->Accept, header_body, s_header_body);
-			request_headers->s_Accept = s_header_body;
-		}
 		if (strncmp(header_name, "Accept", s_header_name) == 0) {
 			request_headers->Accept = (char *)malloc(s_header_body);
 			strncpy(request_headers->Accept, header_body, s_header_body);
@@ -181,6 +216,9 @@ int parse_header(char *header, size_t s_header,
 			strncpy(request_headers->User_Agent, header_body, s_header_body);
 			request_headers->s_User_Agent = s_header_body;
 		}
+	}
+
+	if (entity_headers != NULL) {
 	}
 
 	free(out);

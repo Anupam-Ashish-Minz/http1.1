@@ -21,7 +21,7 @@ struct GeneralHeaders {
 	char *Date;
 	char *Pragma;
 	char *Trailer;
-	char *Tranfer_Encoding;
+	char *Transfer_Encoding;
 	char *Upgrade;
 	char *Via;
 	char *Warning;
@@ -30,10 +30,10 @@ struct GeneralHeaders {
 	size_t s_Date;
 	size_t s_Pragma;
 	size_t s_Trailer;
-	size_t s_Tranfer_Encoding;
+	size_t s_Transfer_Encoding;
 	size_t s_Upgrade;
 	size_t s_Via;
-	size_t s_Warning_s;
+	size_t s_Warning;
 };
 
 struct RequestHeaders {
