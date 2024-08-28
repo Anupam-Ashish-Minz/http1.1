@@ -18,7 +18,7 @@ void test_parse_simple_get_request() {
 	}
 
 	ASSERT_EQ(request.method, GET);
-	ASSERT_EQ_STR(request.path, "/");
+	ASSERT_EQ_STR(request.requri, "/");
 }
 
 void test_parse_post_request() {
@@ -39,7 +39,7 @@ void test_parse_post_request() {
 	}
 
 	ASSERT_EQ(request.method, POST);
-	ASSERT_EQ_STR(request.path, "/");
+	ASSERT_EQ_STR(request.requri, "/");
 }
 
 int main() {

@@ -11,10 +11,15 @@ enum HTTP_METHOD {
 	DELETE,
 };
 
+enum HTTP_VERSION {
+	HTTP_1_1
+};
+
 struct HttpRequest {
 	enum HTTP_METHOD method;
-	char *path;
-	size_t path_s;
+	char *requri;
+	size_t requri_s;
+	enum HTTP_VERSION version;
 };
 
 int parse_http_request(char *request, size_t request_s, struct HttpRequest *ret);

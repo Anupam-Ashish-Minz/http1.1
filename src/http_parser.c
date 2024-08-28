@@ -45,10 +45,10 @@ int parse_http_request(char *raw, size_t raw_s, struct HttpRequest *out) {
 		fprintf(stderr, "invalid method type parsing failed\n");
 		return -1;
 	}
-	out->path = (char *)malloc(words_index[1] + 1);
-	strncpy(out->path, words[1], words_index[1]);
-	out->path += '\0';
-	out->path_s = words_index[1] + 1;
+	out->requri = (char *)malloc(words_index[1] + 1);
+	strncpy(out->requri, words[1], words_index[1]);
+	out->requri += '\0';
+	out->requri_s = words_index[1] + 1;
 
 	return 0;
 }
