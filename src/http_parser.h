@@ -99,7 +99,7 @@ struct EntityHeaders {
 	size_t s_Content_Type;
 	size_t s_Expires;
 	size_t s_Extension_Header;
-	size_t s_Last_Modified_s;
+	size_t s_Last_Modified;
 };
 
 struct HttpRequest {

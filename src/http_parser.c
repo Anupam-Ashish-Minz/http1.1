@@ -217,11 +217,67 @@ int parse_header(char *header, size_t s_header,
 			request_headers->s_User_Agent = s_header_body;
 		}
 	}
-
 	if (entity_headers != NULL) {
+		if (strncmp(header_name, "Allow", s_header_name) == 0) {
+			entity_headers->Allow = (char *)malloc(s_header_body);
+			strncpy(entity_headers->Allow, header_body, s_header_body);
+			entity_headers->s_Allow = s_header_body;
+		}
+		if (strncmp(header_name, "Content-Encoding", s_header_name) == 0) {
+			entity_headers->Content_Encoding = (char *)malloc(s_header_body);
+			strncpy(entity_headers->Content_Encoding, header_body, s_header_body);
+			entity_headers->s_Content_Encoding = s_header_body;
+		}
+		if (strncmp(header_name, "Content-Language", s_header_name) == 0) {
+			entity_headers->Content_Language = (char *)malloc(s_header_body);
+			strncpy(entity_headers->Content_Language, header_body, s_header_body);
+			entity_headers->s_Content_Language = s_header_body;
+		}
+		if (strncmp(header_name, "Content-Length", s_header_name) == 0) {
+			entity_headers->Content_Length = (char *)malloc(s_header_body);
+			strncpy(entity_headers->Content_Length, header_body, s_header_body);
+			entity_headers->s_Content_Length = s_header_body;
+		}
+		if (strncmp(header_name, "Content-Location", s_header_name) == 0) {
+			entity_headers->Content_Location = (char *)malloc(s_header_body);
+			strncpy(entity_headers->Content_Location, header_body, s_header_body);
+			entity_headers->s_Content_Location = s_header_body;
+		}
+		if (strncmp(header_name, "Content-MD5", s_header_name) == 0) {
+			entity_headers->Content_MD5 = (char *)malloc(s_header_body);
+			strncpy(entity_headers->Content_MD5, header_body, s_header_body);
+			entity_headers->s_Content_MD5 = s_header_body;
+		}
+		if (strncmp(header_name, "Content-Range", s_header_name) == 0) {
+			entity_headers->Content_Range = (char *)malloc(s_header_body);
+			strncpy(entity_headers->Content_Range, header_body, s_header_body);
+			entity_headers->s_Content_Range = s_header_body;
+		}
+		if (strncmp(header_name, "Content-Type", s_header_name) == 0) {
+			entity_headers->Content_Type = (char *)malloc(s_header_body);
+			strncpy(entity_headers->Content_Type, header_body, s_header_body);
+			entity_headers->s_Content_Type = s_header_body;
+		}
+		if (strncmp(header_name, "Expires", s_header_name) == 0) {
+			entity_headers->Expires = (char *)malloc(s_header_body);
+			strncpy(entity_headers->Expires, header_body, s_header_body);
+			entity_headers->s_Expires = s_header_body;
+		}
+		if (strncmp(header_name, "Last-Modified", s_header_name) == 0) {
+			entity_headers->Last_Modified = (char *)malloc(s_header_body);
+			strncpy(entity_headers->Last_Modified, header_body, s_header_body);
+			entity_headers->s_Last_Modified = s_header_body;
+		}
+		if (strncmp(header_name, "extension-header", s_header_name) == 0) {
+			entity_headers->Extension_Header = (char *)malloc(s_header_body);
+			strncpy(entity_headers->Extension_Header, header_body, s_header_body);
+			entity_headers->s_Extension_Header = s_header_body;
+		}
 	}
 
 	free(out);
 	free(out_lens);
+
+	return 0;
 }
 
