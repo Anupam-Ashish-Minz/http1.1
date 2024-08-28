@@ -42,9 +42,18 @@ void test_parse_post_request() {
 	ASSERT_EQ_STR(request.requri, "/");
 }
 
+void test_header_parser() {
+	char *data = "Accept: *";
+	size_t s_data = strlen(data);
+	struct RequestHeaders request_headers;
+	parse_header(data, s_data, NULL, &request_headers, NULL);
+
+	ASSERT_EQ_STR(request_headers.Accept, "*");
+}
+
 int main() {
 	test_parse_simple_get_request();
 	test_parse_post_request();
-
+	test_header_parser();
 	return 0;
 }

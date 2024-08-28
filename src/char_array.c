@@ -61,16 +61,29 @@ int split_by(char *line, int size, char ctrl, char **buf, int *buf_index) {
 	for (int i = 0; i < size; i++) {
 		if (line[i] == ctrl) {
 			if (i == prev) continue;
-			buf_index[k] = i - prev;
-			buf[k] = &line[prev];
-			prev = i + 1;
-			++k;
+			if (prev < size && line[prev] == ' ') {
+				buf_index[k] = i - prev - 1;
+				buf[k] = &line[prev+1];
+				prev = i + 2;
+				++k;
+			} else{
+				buf_index[k] = i - prev - 1;
+				buf[k] = &line[prev];
+				prev = i + 1;
+				++k;
+			}
 		}
 	}
 	if (prev < size) {
-		buf_index[k] = size - prev;
-		buf[k] = &line[prev];
-		++k;
+		if (prev < size && line[prev] == ' ') {
+			buf_index[k] = size - prev - 1;
+			buf[k] = &line[prev] + 1;
+			++k;
+		} else {
+			buf_index[k] = size - prev;
+			buf[k] = &line[prev];
+			++k;
+		}
 	}
 	return k;
 }
