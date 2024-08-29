@@ -112,6 +112,8 @@ struct HttpRequest {
 	struct EntityHeaders entity_headers;
 };
 
+struct HttpRequest init_request_obj();
+
 int parse_http_request(char *request, size_t request_s, struct HttpRequest *ret);
 
 int parse_header(char *header, size_t s_header,

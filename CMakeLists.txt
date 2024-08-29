@@ -7,13 +7,14 @@ include(CTest)
 include_directories(${CMAKE_SOURCE_DIR}/src ${CMAKE_SOURCE_DIR}/test)
 
 set(CMAKE_BUILD_TYPE Debug)
-set(CMAKE_C_FLAGS "-Wall -Wextra -fsanitize=address")
+set(CMAKE_C_FLAGS "-Wall -Wextra")
 
 add_executable(
 		${CMAKE_PROJECT_NAME} 
 		src/main.c 
 		src/char_array.c
 		src/http_parser.c
+		src/dealloc_http_request.c
 )
 
 add_executable(
@@ -27,6 +28,7 @@ add_executable(
 		test/http_parser_test.c
 		src/http_parser.c
 		src/char_array.c
+		src/dealloc_http_request.c
 )
 
 add_test(NAME TestCharArray COMMAND char_array_test)

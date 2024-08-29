@@ -10,7 +10,7 @@ void test_parse_simple_get_request() {
 				"user-agent: curl/8.6.0\r\n"
 				"Accept: */*\r\n";
 
-	struct HttpRequest request;
+	struct HttpRequest request = init_request_obj();
 	int status = parse_http_request(raw, strlen(raw), &request);
 	if (status != 0) {
 		fprintf(stderr, "failed to parse to http request\n");
@@ -33,7 +33,7 @@ void test_parse_post_request() {
 				"{\"name\": \"amy\", \"email\":\"alice@mail.com\", "
 				"\"password\": \"pass\"}\r\n";
 
-	struct HttpRequest request;
+	struct HttpRequest request = init_request_obj();
 	int status = parse_http_request(raw, strlen(raw), &request);
 	if (status != 0) {
 		fprintf(stderr, "failed to parse http request\n");
