@@ -61,8 +61,8 @@ int parse_header(char *header, size_t s_header,
 
 
 	int split_count = get_split_count(header, s_header, ':');
-	char **out = (char **)malloc(s_header * sizeof(char)); // TODO fix the size late
-	int *out_lens = (int *)malloc(split_count * sizeof(int));
+	char **out = (char **)malloc(s_header * sizeof(char **));
+	int *out_lens = (int *)malloc(split_count * sizeof(int *));
 
 	int word_count = split_by(header, s_header, ':', out, out_lens);
 	char *header_name = out[0];

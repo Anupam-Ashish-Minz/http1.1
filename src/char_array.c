@@ -77,7 +77,7 @@ int split_by(char *line, int size, char ctrl, char **buf, int *buf_index) {
 	if (prev < size) {
 		if (prev < size && line[prev] == ' ') {
 			buf_index[k] = size - prev - 1;
-			buf[k] = &line[prev] + 1;
+			buf[k] = &line[prev+1];
 			++k;
 		} else {
 			buf_index[k] = size - prev;

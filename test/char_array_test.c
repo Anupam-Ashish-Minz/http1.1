@@ -10,7 +10,7 @@ void test_split_line2() {
 	int orig_line_count = 2;
 
 	char **buf = (char **)malloc(orig_line_count * sizeof(char **));
-	int *buf_s = (int *)malloc(orig_line_count * sizeof(int));
+	int *buf_s = (int *)malloc(orig_line_count * sizeof(int *));
 
 	int line_count = split_lines2(lines, strlen(lines), buf, buf_s);
 
@@ -31,7 +31,7 @@ void test_split_black_line2() {
 	int orig_line_count = 3;
 
 	char **buf = (char **)malloc(orig_line_count * sizeof(char **));
-	int *buf_s = (int *)malloc(orig_line_count * sizeof(int));
+	int *buf_s = (int *)malloc(orig_line_count * sizeof(int *));
 
 	int line_count = split_lines2(lines, strlen(lines), buf, buf_s);
 
@@ -55,7 +55,7 @@ void test_split_multiple_lines2() {
 	int orig_line_count = 4;
 
 	char **buf = (char **)malloc(orig_line_count * sizeof(char **));
-	int *buf_s = (int *)malloc(orig_line_count * sizeof(int));
+	int *buf_s = (int *)malloc(orig_line_count * sizeof(int *));
 
 	int line_count = split_lines2(lines, strlen(lines), buf, buf_s);
 
@@ -79,7 +79,7 @@ void test_split_by_word() {
 	int line_s =  strlen(line);
 	int orig_word_count = 5;
 	char **buf = (char **)malloc(orig_word_count * sizeof(char **));
-	int *buf_s = (int *)malloc(orig_word_count * sizeof(int)); 
+	int *buf_s = (int *)malloc(orig_word_count * sizeof(int *)); 
 
 	int word_count = split_by_words(line, line_s, buf, buf_s);
 
