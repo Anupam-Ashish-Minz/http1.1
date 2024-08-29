@@ -117,6 +117,23 @@ void test_word_count_blank_lines() {
 	ASSERT_EQ(line_count, 4);
 }
 
+void test_split_by_once() {
+	char *data = "hello.world";
+	char **buf = (char **)malloc(3 * sizeof(char *));
+	int *bufindex = (int *)malloc(3 * sizeof(int));
+	int ret = split_by_once(data, strlen(data), '.', buf, bufindex);
+
+	ASSERT_EQ(ret, 2);
+	ASSERT_EQ(bufindex[0], 5);
+	ASSERT_EQ(bufindex[1], 5);
+
+	ASSERT_EQ_STR(buf[0], "hello");
+	ASSERT_EQ_STR(buf[1], "world");
+
+	free(buf);
+	free(bufindex);
+}
+
 int main() {
 	test_split_line2();
 	test_split_black_line2();
@@ -126,6 +143,8 @@ int main() {
 
 	test_word_count();
 	test_word_count_blank_lines();
+
+	test_split_by_once();
 
 	return 0;
 }

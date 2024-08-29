@@ -88,6 +88,23 @@ int split_by(char *line, int size, char ctrl, char **buf, int *buf_index) {
 	return k;
 }
 
+int split_by_once(char *line, int size, char ctrl, char **buf, int *buf_index) {
+	int split_at = -1;
+	for (int i = 0; i < size; i++) {
+		if (line[i] == ctrl) {
+			split_at = i;
+		}
+	}
+	if (split_at < 0) {
+		return -1;
+	}
+	buf[0] = &line[0];
+	buf_index[0] = split_at;
+	buf[1] = &line[split_at + 1];
+	buf_index[1] = size - (split_at + 1);
+	return 2;
+}
+
 int get_line_count(char *buf, size_t size) {
 	if (strcmp(buf, "") == 0) {
 		return 0;

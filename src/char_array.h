@@ -9,5 +9,6 @@ int get_line_count(char *buf, size_t size);
 int get_word_count(char *buf, size_t size);
 int split_by(char *line, int size, char ctrl, char **buf, int *buf_index);
 int get_split_count(char *buf, size_t size, char ctrl);
+int split_by_once(char *line, int size, char ctrl, char **buf, int *buf_index);
 
 #endif

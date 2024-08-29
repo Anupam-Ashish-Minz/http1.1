@@ -204,7 +204,7 @@ int parse_header(char *header, size_t s_header,
 	char **out = (char **)malloc(s_header * sizeof(char *));
 	int *out_lens = (int *)malloc(split_count * sizeof(int));
 
-	int word_count = split_by(header, s_header, ':', out, out_lens);
+	int word_count = split_by_once(header, s_header, ':', out, out_lens);
 	char *header_name = out[0];
 	size_t s_header_name = out_lens[0];
 	char *header_body = out[1];
