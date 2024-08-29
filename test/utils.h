@@ -20,17 +20,4 @@
 		exit(-1);                                                              \
 	}
 
-#define ASSERT_EQ_T(t, a, b)                                                   \
-	if (t == "string") {                                                       \
-		ASSERT_EQ_STR(a, b)                                                    \
-	} else if (a != b) {                                                       \
-		fprintf(stderr, "Assert failed: %s, %s\n", #a, #b);                    \
-		if (strcmp(t, "int") == 0) {                                           \
-			fprintf(stderr, "Assert values: %d, %d\n", a, b);                  \
-		} else if (strcmp(t, "float") == 0) {                                  \
-			fprintf(stderr, "Assert values: %f, %f\n", a, b);                  \
-		}                                                                      \
-		exit(-1);                                                              \
-	}
-
 #endif
