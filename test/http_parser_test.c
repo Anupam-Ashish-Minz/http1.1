@@ -64,8 +64,20 @@ void test_authorization_header_parsing() {
 	struct RequestHeaders request_headers;
 	parse_header(data, s_data, NULL, &request_headers, NULL);
 
-	ASSERT_EQ_STR(request_headers.Authorization, "Basic YWxhZGRpbjpvcGVuc2VzYW1l");
 	ASSERT_EQ((int)request_headers.s_Authorization, 31);
+	ASSERT_EQ_STR(request_headers.Authorization, "Basic YWxhZGRpbjpvcGVuc2VzYW1l");
+
+	dealloc_request_headers(&request_headers);
+}
+
+void test_host_header_parsing() {
+	char *data = "host: localhost:4000";
+	size_t s_data = strlen(data);
+	struct RequestHeaders request_headers;
+	parse_header(data, s_data, NULL, &request_headers, NULL);
+
+	ASSERT_EQ((int)request_headers.s_Host, (int)strlen("locahost:4000") + 1);
+	ASSERT_EQ_STR(request_headers.Host, "localhost:4000");
 
 	dealloc_request_headers(&request_headers);
 }
@@ -75,6 +87,7 @@ int main() {
 	test_authorization_header_parsing();
 	test_parse_simple_get_request();
 	test_parse_post_request();
+	test_host_header_parsing();
 
 	return 0;
 }
