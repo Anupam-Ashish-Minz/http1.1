@@ -50,6 +50,11 @@ int parse_http_request(char *raw, size_t raw_s, struct HttpRequest *out) {
 	out->requri += '\0';
 	out->requri_s = words_index[1] + 1;
 
+	free(words);
+	free(words_index);
+	free(lines);
+	free(lines_index);
+
 	return 0;
 }
 
