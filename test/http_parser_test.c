@@ -19,6 +19,8 @@ void test_parse_simple_get_request() {
 
 	ASSERT_EQ(request.method, GET);
 	ASSERT_EQ_STR(request.requri, "/");
+
+	dealloc_request(&request);
 }
 
 void test_parse_post_request() {
@@ -40,6 +42,8 @@ void test_parse_post_request() {
 
 	ASSERT_EQ(request.method, POST);
 	ASSERT_EQ_STR(request.requri, "/");
+
+	dealloc_request(&request);
 }
 
 void test_header_parser() {
@@ -50,6 +54,8 @@ void test_header_parser() {
 
 	ASSERT_EQ_STR(request_headers.Accept, "*");
 	ASSERT_EQ((int)request_headers.s_Accept, 2);
+
+	dealloc_request_headers(&request_headers);
 }
 
 int main() {

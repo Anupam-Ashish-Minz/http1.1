@@ -119,4 +119,10 @@ int parse_header(char *header, size_t s_header,
 				 struct RequestHeaders *request_headers,
 				 struct EntityHeaders *entity_headers);
 
+int dealloc_general_headers(struct GeneralHeaders *general_headers);
+int dealloc_request_headers(struct RequestHeaders *reqeust_headers);
+int dealloc_entity_headers(struct EntityHeaders *entity_headers);
+
+int dealloc_request(struct HttpRequest *request);
+
 #endif
