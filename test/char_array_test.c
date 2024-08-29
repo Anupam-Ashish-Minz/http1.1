@@ -77,8 +77,8 @@ void test_split_multiple_lines2() {
 void test_split_by_word() {
 	char *line = "hello world this is a line";
 	int line_s =  strlen(line);
-	int orig_word_count = 5;
-	char **buf = (char **)malloc(orig_word_count * sizeof(char **));
+	int orig_word_count = 6;
+	char **buf = (char **)malloc(orig_word_count * sizeof(char*));
 	int *buf_s = (int *)malloc(orig_word_count * sizeof(int)); 
 
 	int word_count = split_by_words(line, line_s, buf, buf_s);
