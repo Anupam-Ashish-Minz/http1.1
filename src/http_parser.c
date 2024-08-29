@@ -4,92 +4,108 @@
 #include <stdlib.h>
 #include <string.h>
 
+struct GeneralHeaders init_general_headers() {
+	struct GeneralHeaders general_headers;
+	general_headers.Cache_Control = NULL;
+	general_headers.Connection = NULL;
+	general_headers.Date = NULL;
+	general_headers.Pragma = NULL;
+	general_headers.Trailer = NULL;
+	general_headers.Transfer_Encoding = NULL;
+	general_headers.Upgrade = NULL;
+	general_headers.Via = NULL;
+	general_headers.Warning = NULL;
+	general_headers.s_Cache_Control = 0;
+	general_headers.s_Connection = 0;
+	general_headers.s_Date = 0;
+	general_headers.s_Pragma = 0;
+	general_headers.s_Trailer = 0;
+	general_headers.s_Transfer_Encoding = 0;
+	general_headers.s_Upgrade = 0;
+	general_headers.s_Via = 0;
+	general_headers.s_Warning = 0;
+	return general_headers;
+}
+
+struct RequestHeaders init_request_headers() {
+	struct RequestHeaders request_headers;
+	request_headers.Accept = NULL;
+	request_headers.Accept_Charset = NULL;
+	request_headers.Accept_Encoding = NULL;
+	request_headers.Accept_Language = NULL;
+	request_headers.Authorization = NULL;
+	request_headers.Expect = NULL;
+	request_headers.From = NULL;
+	request_headers.Host = NULL;
+	request_headers.If_Match = NULL;
+	request_headers.If_Modified_Since = NULL;
+	request_headers.If_None_Match = NULL;
+	request_headers.If_Range = NULL;
+	request_headers.If_Unmodified_Since = NULL;
+	request_headers.Max_Forwards = NULL;
+	request_headers.Proxy_Authorization = NULL;
+	request_headers.Range = NULL;
+	request_headers.Referer = NULL;
+	request_headers.TE = NULL;
+	request_headers.User_Agent = NULL;
+	request_headers.s_Accept = 0;
+	request_headers.s_Accept_Charset = 0;
+	request_headers.s_Accept_Encoding = 0;
+	request_headers.s_Accept_Language = 0;
+	request_headers.s_Authorization = 0;
+	request_headers.s_Expect = 0;
+	request_headers.s_From = 0;
+	request_headers.s_Host = 0;
+	request_headers.s_If_Match = 0;
+	request_headers.s_If_Modified_Since = 0;
+	request_headers.s_If_None_Match = 0;
+	request_headers.s_If_Range = 0;
+	request_headers.s_If_Unmodified_Since = 0;
+	request_headers.s_Max_Forwards = 0;
+	request_headers.s_Proxy_Authorization = 0;
+	request_headers.s_Range = 0;
+	request_headers.s_Referer = 0;
+	request_headers.s_TE = 0;
+	request_headers.s_User_Agent = 0;
+	return request_headers;
+}
+
+
+struct EntityHeaders init_entity_headers() {
+	struct EntityHeaders entity_headers;
+	entity_headers.Allow = NULL;
+	entity_headers.Content_Encoding = NULL;
+	entity_headers.Content_Language = NULL;
+	entity_headers.Content_Length = NULL;
+	entity_headers.Content_Location = NULL;
+	entity_headers.Content_MD5 = NULL;
+	entity_headers.Content_Range = NULL;
+	entity_headers.Content_Type = NULL;
+	entity_headers.Expires = NULL;
+	entity_headers.Last_Modified = NULL;
+	entity_headers.Extension_Header = NULL;
+	entity_headers.s_Allow = 0;
+	entity_headers.s_Content_Encoding = 0;
+	entity_headers.s_Content_Language = 0;
+	entity_headers.s_Content_Length = 0;
+	entity_headers.s_Content_Location = 0;
+	entity_headers.s_Content_MD5 = 0;
+	entity_headers.s_Content_Range = 0;
+	entity_headers.s_Content_Type = 0;
+	entity_headers.s_Expires = 0;
+	entity_headers.s_Last_Modified = 0;
+	entity_headers.s_Extension_Header = 0;
+	return entity_headers;
+}
+
+
 struct HttpRequest init_request_obj() {
 	struct HttpRequest request;
 	request.requri = NULL;
 	request.requri_s = 0;
-
-	request.general_headers.Cache_Control = NULL;
-	request.general_headers.Connection = NULL;
-	request.general_headers.Date = NULL;
-	request.general_headers.Pragma = NULL;
-	request.general_headers.Trailer = NULL;
-	request.general_headers.Transfer_Encoding = NULL;
-	request.general_headers.Upgrade = NULL;
-	request.general_headers.Via = NULL;
-	request.general_headers.Warning = NULL;
-	request.general_headers.s_Cache_Control = 0;
-	request.general_headers.s_Connection = 0;
-	request.general_headers.s_Date = 0;
-	request.general_headers.s_Pragma = 0;
-	request.general_headers.s_Trailer = 0;
-	request.general_headers.s_Transfer_Encoding = 0;
-	request.general_headers.s_Upgrade = 0;
-	request.general_headers.s_Via = 0;
-	request.general_headers.s_Warning = 0;
-
-	request.request_headers.Accept = NULL;
-	request.request_headers.Accept_Charset = NULL;
-	request.request_headers.Accept_Encoding = NULL;
-	request.request_headers.Accept_Language = NULL;
-	request.request_headers.Authorization = NULL;
-	request.request_headers.Expect = NULL;
-	request.request_headers.From = NULL;
-	request.request_headers.Host = NULL;
-	request.request_headers.If_Match = NULL;
-	request.request_headers.If_Modified_Since = NULL;
-	request.request_headers.If_None_Match = NULL;
-	request.request_headers.If_Range = NULL;
-	request.request_headers.If_Unmodified_Since = NULL;
-	request.request_headers.Max_Forwards = NULL;
-	request.request_headers.Proxy_Authorization = NULL;
-	request.request_headers.Range = NULL;
-	request.request_headers.Referer = NULL;
-	request.request_headers.TE = NULL;
-	request.request_headers.User_Agent = NULL;
-	request.request_headers.s_Accept = 0;
-	request.request_headers.s_Accept_Charset = 0;
-	request.request_headers.s_Accept_Encoding = 0;
-	request.request_headers.s_Accept_Language = 0;
-	request.request_headers.s_Authorization = 0;
-	request.request_headers.s_Expect = 0;
-	request.request_headers.s_From = 0;
-	request.request_headers.s_Host = 0;
-	request.request_headers.s_If_Match = 0;
-	request.request_headers.s_If_Modified_Since = 0;
-	request.request_headers.s_If_None_Match = 0;
-	request.request_headers.s_If_Range = 0;
-	request.request_headers.s_If_Unmodified_Since = 0;
-	request.request_headers.s_Max_Forwards = 0;
-	request.request_headers.s_Proxy_Authorization = 0;
-	request.request_headers.s_Range = 0;
-	request.request_headers.s_Referer = 0;
-	request.request_headers.s_TE = 0;
-	request.request_headers.s_User_Agent = 0;
-
-
-	request.entity_headers.Allow = NULL;
-	request.entity_headers.Content_Encoding = NULL;
-	request.entity_headers.Content_Language = NULL;
-	request.entity_headers.Content_Length = NULL;
-	request.entity_headers.Content_Location = NULL;
-	request.entity_headers.Content_MD5 = NULL;
-	request.entity_headers.Content_Range = NULL;
-	request.entity_headers.Content_Type = NULL;
-	request.entity_headers.Expires = NULL;
-	request.entity_headers.Last_Modified = NULL;
-	request.entity_headers.Extension_Header = NULL;
-	request.entity_headers.s_Allow = 0;
-	request.entity_headers.s_Content_Encoding = 0;
-	request.entity_headers.s_Content_Language = 0;
-	request.entity_headers.s_Content_Length = 0;
-	request.entity_headers.s_Content_Location = 0;
-	request.entity_headers.s_Content_MD5 = 0;
-	request.entity_headers.s_Content_Range = 0;
-	request.entity_headers.s_Content_Type = 0;
-	request.entity_headers.s_Expires = 0;
-	request.entity_headers.s_Last_Modified = 0;
-	request.entity_headers.s_Extension_Header = 0;
+	request.general_headers = init_general_headers();
+	request.request_headers = init_request_headers();
+	request.entity_headers = init_entity_headers();
 
 	return request;
 }
