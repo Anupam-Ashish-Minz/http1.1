@@ -11,9 +11,7 @@ enum HTTP_METHOD {
 	DELETE,
 };
 
-enum HTTP_VERSION {
-	HTTP_1_1
-};
+enum HTTP_VERSION { HTTP_1_1 };
 
 struct GeneralHeaders {
 	char *Cache_Control;
@@ -113,8 +111,12 @@ struct HttpRequest {
 };
 
 struct HttpRequest init_request_obj();
+struct GenearlHeaders init_genearl_headers();
+struct RequestHeaders init_request_headers();
+struct EntityHeaders init_entity_headers();
 
-int parse_http_request(char *request, size_t request_s, struct HttpRequest *ret);
+int parse_http_request(char *request, size_t request_s,
+					   struct HttpRequest *ret);
 
 int parse_header(char *header, size_t s_header,
 				 struct GeneralHeaders *general_headers,
@@ -126,5 +128,14 @@ int dealloc_request_headers(struct RequestHeaders *reqeust_headers);
 int dealloc_entity_headers(struct EntityHeaders *entity_headers);
 
 int dealloc_request(struct HttpRequest *request);
+
+#define TOLOWER                                                                \
+	(string, len) {                                                            \
+		char *outstr = (char *)malloc(len * sizeof(char));                     \
+		strncpy(outstr, string, len);                                          \
+		for (int i = 0; i < len; i++) {                                        \
+			outstr[i] = tolower(outstr[i]);                                    \
+		}                                                                      \
+	}
 
 #endif

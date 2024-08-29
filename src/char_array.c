@@ -67,7 +67,7 @@ int split_by(char *line, int size, char ctrl, char **buf, int *buf_index) {
 				prev = i + 2;
 				++k;
 			} else{
-				buf_index[k] = i - prev - 1;
+				buf_index[k] = i - prev;
 				buf[k] = &line[prev];
 				prev = i + 1;
 				++k;
