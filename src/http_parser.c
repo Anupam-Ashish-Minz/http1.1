@@ -50,6 +50,11 @@ int parse_http_request(char *raw, size_t raw_s, struct HttpRequest *out) {
 	out->requri += '\0';
 	out->requri_s = words_index[1] + 1;
 
+	for (int i = 1; i < line_count; i++) {
+		parse_header(lines[i], (size_t)lines_index[i], &out->general_headers,
+					 &out->request_headers, &out->entity_headers);
+	}
+
 	free(words);
 	free(words_index);
 	free(lines);
@@ -124,7 +129,6 @@ struct RequestHeaders init_request_headers() {
 	return request_headers;
 }
 
-
 struct EntityHeaders init_entity_headers() {
 	struct EntityHeaders entity_headers;
 	entity_headers.Allow = NULL;
@@ -152,7 +156,6 @@ struct EntityHeaders init_entity_headers() {
 	return entity_headers;
 }
 
-
 struct HttpRequest init_request_obj() {
 	struct HttpRequest request;
 	request.requri = NULL;
@@ -169,9 +172,16 @@ int parse_header(char *header, size_t s_header,
 				 struct RequestHeaders *request_headers,
 				 struct EntityHeaders *entity_headers) {
 
+	if (header == NULL) {
+		return -1;
+	} else if (s_header == 0) {
+		return -1;
+	} else if (strlen(header) == 0) {
+		return -1;
+	}
 	int split_count = get_split_count(header, s_header, ':');
-	char **out = (char **)malloc(s_header * sizeof(char **));
-	int *out_lens = (int *)malloc(split_count * sizeof(int *));
+	char **out = (char **)malloc(s_header * sizeof(char *));
+	int *out_lens = (int *)malloc(split_count * sizeof(int));
 
 	int word_count = split_by(header, s_header, ':', out, out_lens);
 	char *header_name = out[0];

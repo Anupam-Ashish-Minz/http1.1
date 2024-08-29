@@ -71,9 +71,10 @@ void test_authorization_header_parsing() {
 }
 
 int main() {
-	test_parse_simple_get_request();
-	test_parse_post_request();
 	test_header_parser();
 	test_authorization_header_parsing();
+	test_parse_simple_get_request();
+	test_parse_post_request();
+
 	return 0;
 }
