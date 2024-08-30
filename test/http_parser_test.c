@@ -3,6 +3,19 @@
 #include "utils.h"
 #include <stdio.h>
 #include <string.h>
+#include <stdbool.h>
+
+void test_str_cieq() {
+	char *a = "host";
+	char *b = "Host";
+
+	ASSERT_EQ(str_CIEQ(a, b, strlen(a), strlen(b)), true);
+
+	a = "bost";
+	b = "roast";
+
+	ASSERT_EQ(str_CIEQ(a, b, strlen(a), strlen(b)), false);
+}
 
 void test_parse_simple_get_request() {
 	char *raw = "get / http/1.1\r\n"
@@ -83,6 +96,7 @@ void test_host_header_parsing() {
 }
 
 int main() {
+	test_str_cieq();
 	test_header_parser();
 	test_authorization_header_parsing();
 	test_parse_simple_get_request();

@@ -3,6 +3,7 @@
 
 #include "char_array.h"
 #include <stddef.h>
+#include <stdbool.h>
 
 enum HTTP_METHOD {
 	GET,
@@ -137,5 +138,8 @@ int dealloc_request(struct HttpRequest *request);
 			outstr[i] = tolower(outstr[i]);                                    \
 		}                                                                      \
 	}
+
+
+bool str_CIEQ(char *a, char *b, int a_len, int b_len);
 
 #endif
