@@ -89,8 +89,8 @@ void test_host_header_parsing() {
 	struct RequestHeaders request_headers;
 	parse_header(data, s_data, NULL, &request_headers, NULL);
 
-	ASSERT_EQ((int)request_headers.s_Host, (int)strlen("locahost:4000") + 1);
 	ASSERT_EQ_STR(request_headers.Host, "localhost:4000");
+	ASSERT_EQ((int)request_headers.s_Host, (int)strlen("localhost:4000") + 1);
 
 	dealloc_request_headers(&request_headers);
 }
@@ -99,9 +99,9 @@ int main() {
 	test_str_cieq();
 	test_header_parser();
 	test_authorization_header_parsing();
+	test_host_header_parsing();
 	test_parse_simple_get_request();
 	test_parse_post_request();
-	test_host_header_parsing();
 
 	return 0;
 }

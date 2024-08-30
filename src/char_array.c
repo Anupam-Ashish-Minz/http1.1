@@ -93,6 +93,7 @@ int split_by_once(char *line, int size, char ctrl, char **buf, int *buf_index) {
 	for (int i = 0; i < size; i++) {
 		if (line[i] == ctrl) {
 			split_at = i;
+			break;
 		}
 	}
 	if (split_at < 0) {
