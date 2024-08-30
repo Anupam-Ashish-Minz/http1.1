@@ -60,6 +60,12 @@ void test_parse_post_request() {
 	ASSERT_EQ(request.method, POST);
 	ASSERT_EQ_STR(request.requri, "/");
 
+	ASSERT_EQ_STR(request.request_headers.Host, "localhost:4000");
+	ASSERT_EQ_STR(request.request_headers.User_Agent, "curl/8.6.0");
+	ASSERT_EQ_STR(request.request_headers.Accept, "*/*");
+	ASSERT_EQ_STR(request.entity_headers.Content_Type, "application/json");
+	ASSERT_EQ_STR(request.entity_headers.Content_Length, "61");
+
 	dealloc_request(&request);
 }
 
