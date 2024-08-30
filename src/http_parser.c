@@ -49,7 +49,7 @@ int parse_http_request(char *raw, size_t raw_s, struct HttpRequest *out) {
 	}
 	out->requri = (char *)malloc(words_index[1] + 1);
 	strncpy(out->requri, words[1], words_index[1]);
-	out->requri += '\0';
+	out->requri[words_index[1]] = '\0';
 	out->requri_s = words_index[1] + 1;
 
 	for (int i = 1; i < line_count; i++) {
