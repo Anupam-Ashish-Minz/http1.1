@@ -33,6 +33,10 @@ void test_parse_simple_get_request() {
 	ASSERT_EQ(request.method, GET);
 	ASSERT_EQ_STR(request.requri, "/");
 
+	ASSERT_EQ_STR(request.request_headers.Host, "localhost:4000");
+	ASSERT_EQ_STR(request.request_headers.User_Agent, "curl/8.6.0");
+	ASSERT_EQ_STR(request.request_headers.Accept, "*/*");
+
 	dealloc_request(&request);
 }
 

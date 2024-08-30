@@ -13,7 +13,7 @@
 	}
 
 #define ASSERT_EQ_STR(a, b)                                                    \
-	if (strncmp(a, b, strlen(b)) != 0) {                                       \
+	if (strncmp(a, b, strlen(a) < strlen(b) ? strlen(a) : strlen(b)) != 0) {   \
 		fprintf(stderr,                                                        \
 				"Assert failed: %s, %s\nactual: \"%s\", expected: \"%s\"\n",   \
 				#a, #b, a, b);                                                 \
