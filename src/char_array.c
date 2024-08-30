@@ -105,6 +105,23 @@ int split_by_once(char *line, int size, char ctrl, char **buf, int *buf_index) {
 	return 2;
 }
 
+int trim_whitespaces_front(char *line, int size, char **out) {
+	int i = 0;
+	while (i < size) {
+		if (line[i] != ' ') {
+			break;
+		}
+		++i;
+	}
+	if (i < size) {
+		*out = &line[i];
+		return size - i;
+	} else {
+		*out = &line[0];
+		return size;
+	}
+}
+
 int get_line_count(char *buf, size_t size) {
 	if (strcmp(buf, "") == 0) {
 		return 0;

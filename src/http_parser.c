@@ -208,7 +208,7 @@ int parse_header(char *header, size_t s_header,
 	char *header_name = out[0];
 	size_t s_header_name = out_lens[0];
 	char *header_body = out[1];
-	size_t s_header_body = out_lens[1];
+	size_t s_header_body = trim_whitespaces_front(out[1], out_lens[1], &header_body);
 
 	if (word_count == 0) {
 		return -1;

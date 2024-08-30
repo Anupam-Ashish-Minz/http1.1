@@ -10,5 +10,6 @@ int get_word_count(char *buf, size_t size);
 int split_by(char *line, int size, char ctrl, char **buf, int *buf_index);
 int get_split_count(char *buf, size_t size, char ctrl);
 int split_by_once(char *line, int size, char ctrl, char **buf, int *buf_index);
+int trim_whitespaces_front(char *line, int size, char **out);
 
 #endif
