@@ -82,3 +82,32 @@ int stringify_general_headers(struct GeneralHeaders headers, char *out,
 
 	return index + 1;
 }
+
+int stringify_entity_headers(struct EntityHeaders headers, char *out, int index,
+							 size_t out_max_len) {
+	int offset;
+	STRINGIFY_KV("Allow", headers.Allow, headers.s_Allow);
+	STRINGIFY_KV("Content-Encoding", headers.Content_Encoding,
+				 headers.s_Content_Encoding);
+	STRINGIFY_KV("Content-Language", headers.Content_Language,
+				 headers.s_Content_Language);
+	if (headers.Content_Length != 0) {
+		if (index + sizeof("Content-Length: \r\n") + 4 > out_max_len) {
+			return -1;
+		}
+		offset = sprintf(&out[index], "%s: %d\r\n", "Content-Length", headers.Content_Length);
+		index += offset;
+	}
+	STRINGIFY_KV("Content-Location", headers.Content_Location,
+				 headers.s_Content_Location);
+	STRINGIFY_KV("Content-MD5", headers.Content_MD5, headers.s_Content_MD5);
+	STRINGIFY_KV("Content-Range", headers.Content_Range,
+				 headers.s_Content_Range);
+	STRINGIFY_KV("Content-Type", headers.Content_Type, headers.s_Content_Type);
+	STRINGIFY_KV("Expires", headers.Expires, headers.s_Expires);
+	STRINGIFY_KV("Last-Modified", headers.Last_Modified,
+				 headers.s_Last_Modified);
+	STRINGIFY_KV("Extension_Header", headers.Extension_Header,
+				 headers.s_Extension_Header);
+	return index + 1;
+}

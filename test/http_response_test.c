@@ -39,6 +39,17 @@ void test_outof_bound_check() {
 	free(out);
 }
 
+void test_entity_headers_stringification() {
+	struct EntityHeaders entity_headers = init_entity_headers();
+	entity_headers.Allow = "http://localhost:4000";
+	entity_headers.s_Allow = 22;
+	char *out = (char *)malloc(31);
+	int out_i = stringify_entity_headers(entity_headers, out, 0, 31);
+	ASSERT_NEQ(out_i, -1);
+	ASSERT_EQ_STR(out, "Allow: http://localhost:4000\r\n");
+	ASSERT_EQ(out_i, 30);
+}
+
 int main() {
 	test_header_stringification();
 	test_multi_header_stringification();

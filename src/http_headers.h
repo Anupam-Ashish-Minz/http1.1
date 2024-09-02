@@ -51,6 +51,7 @@ struct EntityHeaders {
 struct GeneralHeaders init_general_headers();
 struct EntityHeaders init_entity_headers();
 int stringify_general_headers(struct GeneralHeaders headers, char *out, int index, size_t out_max_len);
+int stringify_entity_headers(struct EntityHeaders headers, char *out, int index, size_t out_max_len);
 
 #endif
 
