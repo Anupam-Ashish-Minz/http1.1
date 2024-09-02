@@ -84,6 +84,8 @@ struct HttpResponse {
 	struct EntityHeaders entity_headers;
 };
 
-void send_response(int status_code, char *body, size_t s_body);
+struct HttpResponse create_response(enum STATUS_CODE status_code, char *body, size_t s_body);
+
+// void send_response(int status_code, char *body, size_t s_body);
 
 #endif

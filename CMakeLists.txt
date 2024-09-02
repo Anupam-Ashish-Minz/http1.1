@@ -31,5 +31,14 @@ add_executable(
 		src/dealloc_http_request.c
 )
 
+add_executable(
+		http_response_test
+		test/http_response_test.c
+		src/http_response.c
+		src/char_array.c
+		src/dealloc_http_request.c
+)
+
 add_test(NAME TestCharArray COMMAND char_array_test)
 add_test(NAME TestHttpParser COMMAND http_parser_test)
+add_test(NAME TestHttpResponse COMMAND http_response_test)
