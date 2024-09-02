@@ -14,6 +14,7 @@ add_executable(
 		src/main.c 
 		src/char_array.c
 		src/http_parser.c
+		src/http_headers.c
 		src/dealloc_http_request.c
 )
 
@@ -29,6 +30,7 @@ add_executable(
 		src/http_parser.c
 		src/char_array.c
 		src/dealloc_http_request.c
+		src/http_headers.c
 )
 
 add_executable(
