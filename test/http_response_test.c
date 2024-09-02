@@ -9,7 +9,7 @@ void test_header_stringification() {
 	char *out = (char *)malloc(34);
 	int out_i = stringify_general_headers(general_headers, out, 0, 34);
 	ASSERT_EQ_STR(out, "Cache-Control: something else\r\n");
-	ASSERT_EQ(out_i, 31);
+	ASSERT_EQ(out_i, 32);
 	free(out);
 }
 
@@ -22,7 +22,7 @@ void test_multi_header_stringification() {
 	char *out = (char *)malloc(67);
 	int out_i = stringify_general_headers(general_headers, out, 0, 67);
 	ASSERT_EQ_STR(out, "Cache-Control: something else\r\nConnection: some other thing\r\n");
-	ASSERT_EQ(out_i, 61);
+	ASSERT_EQ(out_i, 62);
 	free(out);
 }
 

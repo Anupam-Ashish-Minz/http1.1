@@ -91,5 +91,5 @@ int stringify_general_headers(struct GeneralHeaders headers, char *out, int inde
 		offset = sprintf(&out[index], "Warning: %s\r\n", headers.Warning);
 		index += offset;
 	}
-	return index; 
+	return index + 1; 
 }
