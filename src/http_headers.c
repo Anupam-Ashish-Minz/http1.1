@@ -56,39 +56,39 @@ struct EntityHeaders init_entity_headers() {
 int stringify_general_headers(struct GeneralHeaders headers, char *out, int index, size_t out_max_len) {
 	int offset;
 	if (headers.Cache_Control != NULL) {
-		offset = sprintf(&out[index], "Cache-Control: %s", headers.Cache_Control);
+		offset = sprintf(&out[index], "Cache-Control: %s\r\n", headers.Cache_Control);
 		index += offset;
 	}
 	if (headers.Connection != NULL) {
-		offset = sprintf(&out[index], "Connection: %s", headers.Connection);
+		offset = sprintf(&out[index], "Connection: %s\r\n", headers.Connection);
 		index += offset;
 	}
 	if (headers.Date != NULL) {
-		offset = sprintf(&out[index], "Date: %s", headers.Date);
+		offset = sprintf(&out[index], "Date: %s\r\n", headers.Date);
 		index += offset;
 	}
 	if (headers.Pragma != NULL) {
-		offset = sprintf(&out[index], "Pragma: %s", headers.Pragma);
+		offset = sprintf(&out[index], "Pragma: %s\r\n", headers.Pragma);
 		index += offset;
 	}
 	if (headers.Trailer != NULL) {
-		offset = sprintf(&out[index], "Trailer: %s", headers.Trailer);
+		offset = sprintf(&out[index], "Trailer: %s\r\n", headers.Trailer);
 		index += offset;
 	}
 	if (headers.Transfer_Encoding != NULL) {
-		offset = sprintf(&out[index], "Transfer_Encoding: %s", headers.Transfer_Encoding);
+		offset = sprintf(&out[index], "Transfer_Encoding: %s\r\n", headers.Transfer_Encoding);
 		index += offset;
 	}
 	if (headers.Upgrade != NULL) {
-		offset = sprintf(&out[index], "Upgrade: %s", headers.Upgrade);
+		offset = sprintf(&out[index], "Upgrade: %s\r\n", headers.Upgrade);
 		index += offset;
 	}
 	if (headers.Via != NULL) {
-		offset = sprintf(&out[index], "Via: %s", headers.Via);
+		offset = sprintf(&out[index], "Via: %s\r\n", headers.Via);
 		index += offset;
 	}
 	if (headers.Warning != NULL) {
-		offset = sprintf(&out[index], "Warning: %s", headers.Warning);
+		offset = sprintf(&out[index], "Warning: %s\r\n", headers.Warning);
 		index += offset;
 	}
 	return index; 
