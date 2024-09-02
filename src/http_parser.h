@@ -111,7 +111,7 @@ struct HttpRequest {
 };
 
 struct HttpRequest init_request_obj();
-struct GenearlHeaders init_genearl_headers();
+struct GeneralHeaders init_general_headers();
 struct RequestHeaders init_request_headers();
 struct EntityHeaders init_entity_headers();
 
