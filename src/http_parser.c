@@ -1,11 +1,11 @@
 #include "http_parser.h"
-#include "http_headers.h"
 #include "char_array.h"
+#include "http_headers.h"
+#include <ctype.h>
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <stdbool.h>
-#include <ctype.h>
 
 int parse_http_request(char *raw, size_t raw_s, struct HttpRequest *out) {
 	int line_count = get_line_count(raw, raw_s);
@@ -67,45 +67,47 @@ int parse_http_request(char *raw, size_t raw_s, struct HttpRequest *out) {
 }
 
 struct RequestHeaders init_request_headers() {
-	struct RequestHeaders request_headers;
-	request_headers.Accept = NULL;
-	request_headers.Accept_Charset = NULL;
-	request_headers.Accept_Encoding = NULL;
-	request_headers.Accept_Language = NULL;
-	request_headers.Authorization = NULL;
-	request_headers.Expect = NULL;
-	request_headers.From = NULL;
-	request_headers.Host = NULL;
-	request_headers.If_Match = NULL;
-	request_headers.If_Modified_Since = NULL;
-	request_headers.If_None_Match = NULL;
-	request_headers.If_Range = NULL;
-	request_headers.If_Unmodified_Since = NULL;
-	request_headers.Max_Forwards = NULL;
-	request_headers.Proxy_Authorization = NULL;
-	request_headers.Range = NULL;
-	request_headers.Referer = NULL;
-	request_headers.TE = NULL;
-	request_headers.User_Agent = NULL;
-	request_headers.s_Accept = 0;
-	request_headers.s_Accept_Charset = 0;
-	request_headers.s_Accept_Encoding = 0;
-	request_headers.s_Accept_Language = 0;
-	request_headers.s_Authorization = 0;
-	request_headers.s_Expect = 0;
-	request_headers.s_From = 0;
-	request_headers.s_Host = 0;
-	request_headers.s_If_Match = 0;
-	request_headers.s_If_Modified_Since = 0;
-	request_headers.s_If_None_Match = 0;
-	request_headers.s_If_Range = 0;
-	request_headers.s_If_Unmodified_Since = 0;
-	request_headers.s_Max_Forwards = 0;
-	request_headers.s_Proxy_Authorization = 0;
-	request_headers.s_Range = 0;
-	request_headers.s_Referer = 0;
-	request_headers.s_TE = 0;
-	request_headers.s_User_Agent = 0;
+	struct RequestHeaders request_headers = {
+		.Accept = NULL,
+		.Accept_Charset = NULL,
+		.Accept_Encoding = NULL,
+		.Accept_Language = NULL,
+		.Authorization = NULL,
+		.Expect = NULL,
+		.From = NULL,
+		.Host = NULL,
+		.If_Match = NULL,
+		.If_Modified_Since = NULL,
+		.If_None_Match = NULL,
+		.If_Range = NULL,
+		.If_Unmodified_Since = NULL,
+		.Max_Forwards = NULL,
+		.Proxy_Authorization = NULL,
+		.Range = NULL,
+		.Referer = NULL,
+		.TE = NULL,
+		.User_Agent = NULL,
+		.s_Accept = 0,
+		.s_Accept_Charset = 0,
+		.s_Accept_Encoding = 0,
+		.s_Accept_Language = 0,
+		.s_Authorization = 0,
+		.s_Expect = 0,
+		.s_From = 0,
+		.s_Host = 0,
+		.s_If_Match = 0,
+		.s_If_Modified_Since = 0,
+		.s_If_None_Match = 0,
+		.s_If_Range = 0,
+		.s_If_Unmodified_Since = 0,
+		.s_Max_Forwards = 0,
+		.s_Proxy_Authorization = 0,
+		.s_Range = 0,
+		.s_Referer = 0,
+		.s_TE = 0,
+		.s_User_Agent = 0,
+	};
+
 	return request_headers;
 }
 
@@ -127,7 +129,7 @@ bool str_CIEQ(char *a, char *b, int a_len, int b_len) {
 	}
 	char *lower_case_a = (char *)malloc(a_len * sizeof(char));
 	char *lower_case_b = (char *)malloc(a_len * sizeof(char));
-	for(int i=0; i<a_len; i++) {
+	for (int i = 0; i < a_len; i++) {
 		lower_case_a[i] = tolower(a[i]);
 		lower_case_b[i] = tolower(b[i]);
 	}
@@ -159,19 +161,22 @@ int parse_header(char *header, size_t s_header,
 	char *header_name = out[0];
 	size_t s_header_name = out_lens[0];
 	char *header_body = out[1];
-	size_t s_header_body = trim_whitespaces_front(out[1], out_lens[1], &header_body);
+	size_t s_header_body =
+		trim_whitespaces_front(out[1], out_lens[1], &header_body);
 
 	if (word_count == 0) {
 		return -1;
 	}
 	if (general_headers != NULL) {
-		if (str_CIEQ(header_name, "Cache-Control", s_header_name, strlen("Cache-Control"))) {
+		if (str_CIEQ(header_name, "Cache-Control", s_header_name,
+					 strlen("Cache-Control"))) {
 			general_headers->Cache_Control = (char *)malloc(s_header_body + 1);
 			strncpy(general_headers->Cache_Control, header_body, s_header_body);
 			general_headers->Cache_Control[s_header_body] = '\0';
 			general_headers->s_Cache_Control = s_header_body + 1;
 		}
-		if (str_CIEQ(header_name, "Connection", s_header_name, strlen("Connection"))) {
+		if (str_CIEQ(header_name, "Connection", s_header_name,
+					 strlen("Connection"))) {
 			general_headers->Connection = (char *)malloc(s_header_body + 1);
 			strncpy(general_headers->Connection, header_body, s_header_body);
 			general_headers->Connection[s_header_body] = '\0';
@@ -189,20 +194,24 @@ int parse_header(char *header, size_t s_header,
 			general_headers->Pragma[s_header_body] = '\0';
 			general_headers->s_Pragma = s_header_body + 1;
 		}
-		if (str_CIEQ(header_name, "Trailer", s_header_name, strlen("Trailer"))) {
+		if (str_CIEQ(header_name, "Trailer", s_header_name,
+					 strlen("Trailer"))) {
 			general_headers->Trailer = (char *)malloc(s_header_body + 1);
 			strncpy(general_headers->Trailer, header_body, s_header_body);
 			general_headers->Trailer[s_header_body] = '\0';
 			general_headers->s_Trailer = s_header_body + 1;
 		}
-		if (str_CIEQ(header_name, "Transfer-Encoding", s_header_name, strlen("Transfer-Encoding"))) {
-			general_headers->Transfer_Encoding = (char *)malloc(s_header_body + 1);
+		if (str_CIEQ(header_name, "Transfer-Encoding", s_header_name,
+					 strlen("Transfer-Encoding"))) {
+			general_headers->Transfer_Encoding =
+				(char *)malloc(s_header_body + 1);
 			strncpy(general_headers->Transfer_Encoding, header_body,
 					s_header_body);
 			general_headers->Transfer_Encoding[s_header_body] = '\0';
 			general_headers->s_Transfer_Encoding = s_header_body + 1;
 		}
-		if (str_CIEQ(header_name, "Upgrade", s_header_name, strlen("Upgrade"))) {
+		if (str_CIEQ(header_name, "Upgrade", s_header_name,
+					 strlen("Upgrade"))) {
 			general_headers->Upgrade = (char *)malloc(s_header_body + 1);
 			strncpy(general_headers->Upgrade, header_body, s_header_body);
 			general_headers->Upgrade[s_header_body] = '\0';
@@ -214,7 +223,8 @@ int parse_header(char *header, size_t s_header,
 			general_headers->Via[s_header_body] = '\0';
 			general_headers->s_Via = s_header_body + 1;
 		}
-		if (str_CIEQ(header_name, "Warning", s_header_name, strlen("Warning"))) {
+		if (str_CIEQ(header_name, "Warning", s_header_name,
+					 strlen("Warning"))) {
 			general_headers->Warning = (char *)malloc(s_header_body + 1);
 			strncpy(general_headers->Warning, header_body, s_header_body);
 			general_headers->Warning[s_header_body] = '\0';
@@ -228,28 +238,34 @@ int parse_header(char *header, size_t s_header,
 			request_headers->Accept[s_header_body] = '\0';
 			request_headers->s_Accept = s_header_body + 1;
 		}
-		if (str_CIEQ(header_name, "Accept-Charset", s_header_name, strlen("Accept-Charset"))) {
+		if (str_CIEQ(header_name, "Accept-Charset", s_header_name,
+					 strlen("Accept-Charset"))) {
 			request_headers->Accept_Charset = (char *)malloc(s_header_body + 1);
 			strncpy(request_headers->Accept_Charset, header_body,
 					s_header_body);
 			request_headers->Accept_Charset[s_header_body] = '\0';
 			request_headers->s_Accept_Charset = s_header_body + 1;
 		}
-		if (str_CIEQ(header_name, "Accept-Encoding", s_header_name, strlen("Accept-Encoding"))) {
-			request_headers->Accept_Encoding = (char *)malloc(s_header_body + 1);
+		if (str_CIEQ(header_name, "Accept-Encoding", s_header_name,
+					 strlen("Accept-Encoding"))) {
+			request_headers->Accept_Encoding =
+				(char *)malloc(s_header_body + 1);
 			strncpy(request_headers->Accept_Encoding, header_body,
 					s_header_body);
 			request_headers->Accept_Encoding[s_header_body] = '\0';
 			request_headers->s_Accept_Encoding = s_header_body + 1;
 		}
-		if (str_CIEQ(header_name, "Accept-Language", s_header_name, strlen("Accept-Language"))) {
-			request_headers->Accept_Language = (char *)malloc(s_header_body + 1);
+		if (str_CIEQ(header_name, "Accept-Language", s_header_name,
+					 strlen("Accept-Language"))) {
+			request_headers->Accept_Language =
+				(char *)malloc(s_header_body + 1);
 			strncpy(request_headers->Accept_Language, header_body,
 					s_header_body);
 			request_headers->Accept_Language[s_header_body] = '\0';
 			request_headers->s_Accept_Language = s_header_body + 1;
 		}
-		if (str_CIEQ(header_name, "Authorization", s_header_name, strlen("Authorization"))) {
+		if (str_CIEQ(header_name, "Authorization", s_header_name,
+					 strlen("Authorization"))) {
 			request_headers->Authorization = (char *)malloc(s_header_body + 1);
 			strncpy(request_headers->Authorization, header_body, s_header_body);
 			request_headers->Authorization[s_header_body] = '\0';
@@ -273,46 +289,56 @@ int parse_header(char *header, size_t s_header,
 			request_headers->Host[s_header_body] = '\0';
 			request_headers->s_Host = s_header_body + 1;
 		}
-		if (str_CIEQ(header_name, "If-Match", s_header_name, strlen("If-Match"))) {
+		if (str_CIEQ(header_name, "If-Match", s_header_name,
+					 strlen("If-Match"))) {
 			request_headers->If_Match = (char *)malloc(s_header_body + 1);
 			strncpy(request_headers->If_Match, header_body, s_header_body);
 			request_headers->If_Match[s_header_body] = '\0';
 			request_headers->s_If_Match = s_header_body + 1;
 		}
-		if (str_CIEQ(header_name, "If-Modified-Since", s_header_name, strlen("If-Modified-Since"))) {
-			request_headers->If_Modified_Since = (char *)malloc(s_header_body + 1);
+		if (str_CIEQ(header_name, "If-Modified-Since", s_header_name,
+					 strlen("If-Modified-Since"))) {
+			request_headers->If_Modified_Since =
+				(char *)malloc(s_header_body + 1);
 			strncpy(request_headers->If_Modified_Since, header_body,
 					s_header_body);
 			request_headers->If_Modified_Since[s_header_body] = '\0';
 			request_headers->s_If_Modified_Since = s_header_body + 1;
 		}
-		if (str_CIEQ(header_name, "If-None-Match", s_header_name, strlen("If-None-Match"))) {
+		if (str_CIEQ(header_name, "If-None-Match", s_header_name,
+					 strlen("If-None-Match"))) {
 			request_headers->If_None_Match = (char *)malloc(s_header_body + 1);
 			strncpy(request_headers->If_None_Match, header_body, s_header_body);
 			request_headers->If_None_Match[s_header_body] = '\0';
 			request_headers->s_If_None_Match = s_header_body + 1;
 		}
-		if (str_CIEQ(header_name, "If-Range", s_header_name, strlen("If-Range"))) {
+		if (str_CIEQ(header_name, "If-Range", s_header_name,
+					 strlen("If-Range"))) {
 			request_headers->If_Range = (char *)malloc(s_header_body + 1);
 			strncpy(request_headers->If_Range, header_body, s_header_body);
 			request_headers->If_Range[s_header_body] = '\0';
 			request_headers->s_If_Range = s_header_body + 1;
 		}
-		if (str_CIEQ(header_name, "If-Unmodified-Since", s_header_name, strlen("If-Unmodified-Since"))) {
+		if (str_CIEQ(header_name, "If-Unmodified-Since", s_header_name,
+					 strlen("If-Unmodified-Since"))) {
 			request_headers->If_Unmodified_Since =
 				(char *)malloc(s_header_body + 1);
-			strncpy(request_headers->If_Unmodified_Since, header_body, s_header_body);
+			strncpy(request_headers->If_Unmodified_Since, header_body,
+					s_header_body);
 			request_headers->If_Unmodified_Since[s_header_body] = '\0';
 			request_headers->s_If_Unmodified_Since = s_header_body + 1;
 		}
-		if (str_CIEQ(header_name, "Max-Forwards", s_header_name, strlen("Max-Forwards"))) {
+		if (str_CIEQ(header_name, "Max-Forwards", s_header_name,
+					 strlen("Max-Forwards"))) {
 			request_headers->Max_Forwards = (char *)malloc(s_header_body + 1);
 			strncpy(request_headers->Max_Forwards, header_body, s_header_body);
 			request_headers->Max_Forwards[s_header_body] = '\0';
 			request_headers->s_Max_Forwards = s_header_body + 1;
 		}
-		if (str_CIEQ(header_name, "Proxy-Authorization", s_header_name, strlen("Proxy-Authorization"))) {
-			request_headers->Proxy_Authorization = (char *)malloc(s_header_body + 1);
+		if (str_CIEQ(header_name, "Proxy-Authorization", s_header_name,
+					 strlen("Proxy-Authorization"))) {
+			request_headers->Proxy_Authorization =
+				(char *)malloc(s_header_body + 1);
 			strncpy(request_headers->Proxy_Authorization, header_body,
 					s_header_body);
 			request_headers->Proxy_Authorization[s_header_body] = '\0';
@@ -324,7 +350,8 @@ int parse_header(char *header, size_t s_header,
 			request_headers->Range[s_header_body] = '\0';
 			request_headers->s_Range = s_header_body + 1;
 		}
-		if (str_CIEQ(header_name, "Referer", s_header_name, strlen("Referer"))) {
+		if (str_CIEQ(header_name, "Referer", s_header_name,
+					 strlen("Referer"))) {
 			request_headers->Referer = (char *)malloc(s_header_body + 1);
 			strncpy(request_headers->Referer, header_body, s_header_body);
 			request_headers->Referer[s_header_body] = '\0';
@@ -336,7 +363,8 @@ int parse_header(char *header, size_t s_header,
 			request_headers->TE[s_header_body] = '\0';
 			request_headers->s_TE = s_header_body + 1;
 		}
-		if (str_CIEQ(header_name, "User-Agent", s_header_name, strlen("User-Agent"))) {
+		if (str_CIEQ(header_name, "User-Agent", s_header_name,
+					 strlen("User-Agent"))) {
 			request_headers->User_Agent = (char *)malloc(s_header_body + 1);
 			strncpy(request_headers->User_Agent, header_body, s_header_body);
 			request_headers->User_Agent[s_header_body] = '\0';
@@ -350,66 +378,80 @@ int parse_header(char *header, size_t s_header,
 			entity_headers->Allow[s_header_body] = '\0';
 			entity_headers->s_Allow = s_header_body + 1;
 		}
-		if (str_CIEQ(header_name, "Content-Encoding", s_header_name, strlen("Content-Encoding"))) {
-			entity_headers->Content_Encoding = (char *)malloc(s_header_body + 1);
+		if (str_CIEQ(header_name, "Content-Encoding", s_header_name,
+					 strlen("Content-Encoding"))) {
+			entity_headers->Content_Encoding =
+				(char *)malloc(s_header_body + 1);
 			strncpy(entity_headers->Content_Encoding, header_body,
 					s_header_body);
 			entity_headers->Content_Encoding[s_header_body] = '\0';
 			entity_headers->s_Content_Encoding = s_header_body + 1;
 		}
-		if (str_CIEQ(header_name, "Content-Language", s_header_name, strlen("Content-Language"))) {
-			entity_headers->Content_Language = (char *)malloc(s_header_body + 1);
+		if (str_CIEQ(header_name, "Content-Language", s_header_name,
+					 strlen("Content-Language"))) {
+			entity_headers->Content_Language =
+				(char *)malloc(s_header_body + 1);
 			strncpy(entity_headers->Content_Language, header_body,
 					s_header_body);
 			entity_headers->Content_Language[s_header_body] = '\0';
 			entity_headers->s_Content_Language = s_header_body + 1;
 		}
-		if (str_CIEQ(header_name, "Content-Length", s_header_name, strlen("Content-Length"))) {
+		if (str_CIEQ(header_name, "Content-Length", s_header_name,
+					 strlen("Content-Length"))) {
 			char *cstr_content_length = (char *)malloc(s_header_body + 1);
 			strncpy(cstr_content_length, header_body, s_header_body);
 			cstr_content_length[s_header_body] = '\0';
 			entity_headers->Content_Length = atoi(cstr_content_length);
 			free(cstr_content_length);
 		}
-		if (str_CIEQ(header_name, "Content-Location", s_header_name, strlen("Content-Location"))) {
-			entity_headers->Content_Location = (char *)malloc(s_header_body + 1);
+		if (str_CIEQ(header_name, "Content-Location", s_header_name,
+					 strlen("Content-Location"))) {
+			entity_headers->Content_Location =
+				(char *)malloc(s_header_body + 1);
 			strncpy(entity_headers->Content_Location, header_body,
 					s_header_body);
 			entity_headers->Content_Location[s_header_body] = '\0';
 			entity_headers->s_Content_Location = s_header_body + 1;
 		}
-		if (str_CIEQ(header_name, "Content-MD5", s_header_name, strlen("Content-MD5"))) {
+		if (str_CIEQ(header_name, "Content-MD5", s_header_name,
+					 strlen("Content-MD5"))) {
 			entity_headers->Content_MD5 = (char *)malloc(s_header_body + 1);
 			strncpy(entity_headers->Content_MD5, header_body, s_header_body);
 			entity_headers->Content_MD5[s_header_body] = '\0';
 			entity_headers->s_Content_MD5 = s_header_body + 1;
 		}
-		if (str_CIEQ(header_name, "Content-Range", s_header_name, strlen("Content-Range"))) {
+		if (str_CIEQ(header_name, "Content-Range", s_header_name,
+					 strlen("Content-Range"))) {
 			entity_headers->Content_Range = (char *)malloc(s_header_body + 1);
 			strncpy(entity_headers->Content_Range, header_body, s_header_body);
 			entity_headers->Content_Range[s_header_body] = '\0';
 			entity_headers->s_Content_Range = s_header_body + 1;
 		}
-		if (str_CIEQ(header_name, "Content-Type", s_header_name, strlen("Content-Type"))) {
+		if (str_CIEQ(header_name, "Content-Type", s_header_name,
+					 strlen("Content-Type"))) {
 			entity_headers->Content_Type = (char *)malloc(s_header_body + 1);
 			strncpy(entity_headers->Content_Type, header_body, s_header_body);
 			entity_headers->Content_Type[s_header_body] = '\0';
 			entity_headers->s_Content_Type = s_header_body + 1;
 		}
-		if (str_CIEQ(header_name, "Expires", s_header_name, strlen("Expires"))) {
+		if (str_CIEQ(header_name, "Expires", s_header_name,
+					 strlen("Expires"))) {
 			entity_headers->Expires = (char *)malloc(s_header_body + 1);
 			strncpy(entity_headers->Expires, header_body, s_header_body);
 			entity_headers->Expires[s_header_body] = '\0';
 			entity_headers->s_Expires = s_header_body + 1;
 		}
-		if (str_CIEQ(header_name, "Last-Modified", s_header_name, strlen("Last-Modified"))) {
+		if (str_CIEQ(header_name, "Last-Modified", s_header_name,
+					 strlen("Last-Modified"))) {
 			entity_headers->Last_Modified = (char *)malloc(s_header_body + 1);
 			strncpy(entity_headers->Last_Modified, header_body, s_header_body);
 			entity_headers->Last_Modified[s_header_body] = '\0';
 			entity_headers->s_Last_Modified = s_header_body + 1;
 		}
-		if (str_CIEQ(header_name, "extension-header", s_header_name, strlen("extension-header"))) {
-			entity_headers->Extension_Header = (char *)malloc(s_header_body + 1);
+		if (str_CIEQ(header_name, "extension-header", s_header_name,
+					 strlen("extension-header"))) {
+			entity_headers->Extension_Header =
+				(char *)malloc(s_header_body + 1);
 			strncpy(entity_headers->Extension_Header, header_body,
 					s_header_body);
 			entity_headers->Extension_Header[s_header_body] = '\0';
