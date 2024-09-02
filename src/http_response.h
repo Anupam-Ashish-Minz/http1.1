@@ -1,7 +1,7 @@
 #ifndef _HTTP_RESPONSE_h
 #define _HTTP_RESPONSE_h
 
-#include "http_parser.h"
+#include "http_headers.h"
 #include <stddef.h>
 
 // Response      = Status-Line               ; Section 6.1
@@ -82,6 +82,9 @@ struct HttpResponse {
 	struct GeneralHeaders general_headers;
 	struct ResponseHeaders response_headers;
 	struct EntityHeaders entity_headers;
+
+	char *body;
+	size_t s_body;
 };
 
 struct HttpResponse create_response(enum STATUS_CODE status_code, char *body, size_t s_body);
