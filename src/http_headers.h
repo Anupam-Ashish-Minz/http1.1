@@ -50,6 +50,20 @@ struct EntityHeaders {
 
 struct GeneralHeaders init_general_headers();
 struct EntityHeaders init_entity_headers();
+
+#define STRINGIFY_KV(key, value, value_size)                                   \
+	{                                                                          \
+		if (value != NULL) {                                                   \
+			if (index + value_size + sizeof(key) + sizeof(": \r\n") >          \
+				out_max_len) {                                                 \
+				return -1;                                                     \
+			}                                                                  \
+			offset = sprintf(&out[index], "%s: %s\r\n", key, value);           \
+			index += offset;                                                   \
+		}                                                                      \
+	}
+
+
 int stringify_general_headers(struct GeneralHeaders headers, char *out, int index, size_t out_max_len);
 int stringify_entity_headers(struct EntityHeaders headers, char *out, int index, size_t out_max_len);
 

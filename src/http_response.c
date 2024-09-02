@@ -1,4 +1,5 @@
 #include "http_response.h"
+#include "http_headers.h"
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -52,4 +53,18 @@ int create_response(enum STATUS_CODE status_code, char *body,
 	sprintf(status_line, "HTTP/1.1 %d %s\r\n", status_code, reason_phrase);
 
 	return 0;
+}
+
+int stringify_response_headers(struct ResponseHeaders headers, char *out, int index, size_t out_max_len) {
+	int offset;
+	STRINGIFY_KV("Accept-Ranges", headers.Accept_Ranges, headers.s_Accept_Ranges);
+	unsigned int Age; // TODO add condition about it later
+	STRINGIFY_KV("Etag", headers.Etag, headers.s_Etag);
+	STRINGIFY_KV("Location", headers.Location, headers.s_Location);
+	STRINGIFY_KV("Proxy-Authenticate", headers.Proxy_Authenticate, headers.s_Proxy_Authenticate);
+	STRINGIFY_KV("Retry-After", headers.Retry_After, headers.s_Retry_After);
+	STRINGIFY_KV("Server", headers.Server, headers.s_Server);
+	STRINGIFY_KV("Vary", headers.Vary, headers.s_Vary);
+	STRINGIFY_KV("WWW-Authenticate", headers.WWW_Authenticate, headers.s_WWW_Authenticate);
+	return index + 1;
 }
