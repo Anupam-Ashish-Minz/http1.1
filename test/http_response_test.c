@@ -8,6 +8,7 @@ void test_header_stringification() {
 	general_headers.s_Cache_Control = 15;
 	char *out = (char *)malloc(34);
 	int out_i = stringify_general_headers(general_headers, out, 0, 34);
+	ASSERT_NEQ(out_i, -1);
 	ASSERT_EQ_STR(out, "Cache-Control: something else\r\n");
 	ASSERT_EQ(out_i, 32);
 	free(out);
@@ -26,8 +27,21 @@ void test_multi_header_stringification() {
 	free(out);
 }
 
+void test_outof_bound_check() {
+	struct GeneralHeaders general_headers = init_general_headers();
+	general_headers.Cache_Control = "something else";
+	general_headers.s_Cache_Control = 15;
+	general_headers.Connection = "some other thing";
+	general_headers.s_Connection = 17;
+	char *out = (char *)malloc(22);
+	int out_i = stringify_general_headers(general_headers, out, 0, 22);
+	ASSERT_EQ(out_i, -1);
+	free(out);
+}
+
 int main() {
 	test_header_stringification();
 	test_multi_header_stringification();
+	test_outof_bound_check();
 	return 0;
 }

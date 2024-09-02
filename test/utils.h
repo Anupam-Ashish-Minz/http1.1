@@ -13,12 +13,12 @@
 	}
 
 #define ASSERT_EQ_STR(a, b)                                                    \
-	if (strlen(a) < strlen(b)) {                                              \
+	if (strlen(a) < strlen(b)) {                                               \
 		fprintf(stderr,                                                        \
 				"Assert failed: %s, %s\nactual: \"%s\", expected: \"%s\"\n",   \
 				#a, #b, a, b);                                                 \
 		fprintf(stderr,                                                        \
-				"String Length: %s, %s\nactual: \"%ld\", expected: \"%ld\"\n",   \
+				"String Length: %s, %s\nactual: \"%ld\", expected: \"%ld\"\n", \
 				#a, #b, strlen(a), strlen(b));                                 \
 		exit(-1);                                                              \
 	}                                                                          \
@@ -26,6 +26,13 @@
 		fprintf(stderr,                                                        \
 				"Assert failed: %s, %s\nactual: \"%s\", expected: \"%s\"\n",   \
 				#a, #b, a, b);                                                 \
+		exit(-1);                                                              \
+	}
+
+#define ASSERT_NEQ(a, b)                                                       \
+	if (a == b) {                                                              \
+		fprintf(stderr, "Not Equals Assert failed: %s, %s, \nvalue: %d\n", #a, \
+				#b, a);                                                        \
 		exit(-1);                                                              \
 	}
 

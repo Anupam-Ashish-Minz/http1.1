@@ -53,43 +53,32 @@ struct EntityHeaders init_entity_headers() {
 	return entity_headers;
 }
 
-int stringify_general_headers(struct GeneralHeaders headers, char *out, int index, size_t out_max_len) {
+#define STRINGIFY_KV(key, value, value_size)                                   \
+	{                                                                          \
+		if (value != NULL) {                                                   \
+			if (index + value_size + sizeof(key) + sizeof(": \r\n") >          \
+				out_max_len) {                                                 \
+				return -1;                                                     \
+			}                                                                  \
+			offset = sprintf(&out[index], "%s: %s\r\n", key, value);           \
+			index += offset;                                                   \
+		}                                                                      \
+	}
+
+int stringify_general_headers(struct GeneralHeaders headers, char *out,
+							  int index, size_t out_max_len) {
 	int offset;
-	if (headers.Cache_Control != NULL) {
-		offset = sprintf(&out[index], "Cache-Control: %s\r\n", headers.Cache_Control);
-		index += offset;
-	}
-	if (headers.Connection != NULL) {
-		offset = sprintf(&out[index], "Connection: %s\r\n", headers.Connection);
-		index += offset;
-	}
-	if (headers.Date != NULL) {
-		offset = sprintf(&out[index], "Date: %s\r\n", headers.Date);
-		index += offset;
-	}
-	if (headers.Pragma != NULL) {
-		offset = sprintf(&out[index], "Pragma: %s\r\n", headers.Pragma);
-		index += offset;
-	}
-	if (headers.Trailer != NULL) {
-		offset = sprintf(&out[index], "Trailer: %s\r\n", headers.Trailer);
-		index += offset;
-	}
-	if (headers.Transfer_Encoding != NULL) {
-		offset = sprintf(&out[index], "Transfer_Encoding: %s\r\n", headers.Transfer_Encoding);
-		index += offset;
-	}
-	if (headers.Upgrade != NULL) {
-		offset = sprintf(&out[index], "Upgrade: %s\r\n", headers.Upgrade);
-		index += offset;
-	}
-	if (headers.Via != NULL) {
-		offset = sprintf(&out[index], "Via: %s\r\n", headers.Via);
-		index += offset;
-	}
-	if (headers.Warning != NULL) {
-		offset = sprintf(&out[index], "Warning: %s\r\n", headers.Warning);
-		index += offset;
-	}
-	return index + 1; 
+	STRINGIFY_KV("Cache-Control", headers.Cache_Control,
+				 headers.s_Cache_Control);
+	STRINGIFY_KV("Connection", headers.Connection, headers.s_Connection);
+	STRINGIFY_KV("Date", headers.Date, headers.s_Date);
+	STRINGIFY_KV("Pragma", headers.Pragma, headers.s_Pragma);
+	STRINGIFY_KV("Trailer", headers.Trailer, headers.s_Trailer);
+	STRINGIFY_KV("Transfer_Encoding", headers.Transfer_Encoding,
+				 headers.s_Transfer_Encoding);
+	STRINGIFY_KV("Upgrade", headers.Upgrade, headers.s_Upgrade);
+	STRINGIFY_KV("Via", headers.Via, headers.s_Via);
+	STRINGIFY_KV("Warning", headers.Warning, headers.s_Warning);
+
+	return index + 1;
 }
