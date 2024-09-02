@@ -1,5 +1,7 @@
 #include "http_response.h"
 #include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
 
 struct ResponseHeaders init_response_headers() {
 	struct ResponseHeaders response_headers = {
@@ -25,8 +27,9 @@ struct ResponseHeaders init_response_headers() {
 	return response_headers;
 }
 
-struct HttpResponse create_response(enum STATUS_CODE status_code, char *body,
-									size_t s_body) {
+int create_response(enum STATUS_CODE status_code, char *body,
+									size_t s_body, char *out, int out_max_len) {
+
 	struct GeneralHeaders general_headers = init_general_headers();
 	struct ResponseHeaders response_headers = init_response_headers();
 	struct EntityHeaders entity_headers = init_entity_headers();
@@ -43,5 +46,10 @@ struct HttpResponse create_response(enum STATUS_CODE status_code, char *body,
 		.s_body = s_body, // content-length here is also there but this makes stuff more convinent
 	};
 
-	return response;
+	char *reason_phrase = "something";
+	size_t status_line_len = strlen("HTTP/1.1") + 3 + strlen(reason_phrase);
+	char *status_line = (char *)malloc(status_line_len);
+	sprintf(status_line, "HTTP/1.1 %d %s\r\n", status_code, reason_phrase);
+
+	return 0;
 }

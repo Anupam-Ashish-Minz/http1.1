@@ -39,6 +39,7 @@ add_executable(
 		src/http_response.c
 		src/char_array.c
 		src/dealloc_http_request.c
+		src/http_headers.c
 )
 
 add_test(NAME TestCharArray COMMAND char_array_test)

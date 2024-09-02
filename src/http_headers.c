@@ -1,4 +1,6 @@
 #include "http_headers.h"
+#include <stdio.h>
+#include <string.h>
 
 struct GeneralHeaders init_general_headers() {
 	struct GeneralHeaders general_headers = {
@@ -49,4 +51,45 @@ struct EntityHeaders init_entity_headers() {
 		.s_Extension_Header = 0,
 	};
 	return entity_headers;
+}
+
+int stringify_general_headers(struct GeneralHeaders headers, char *out, int index, size_t out_max_len) {
+	int offset;
+	if (headers.Cache_Control != NULL) {
+		offset = sprintf(&out[index], "Cache-Control: %s", headers.Cache_Control);
+		index += offset;
+	}
+	if (headers.Connection != NULL) {
+		offset = sprintf(&out[index], "Connection: %s", headers.Connection);
+		index += offset;
+	}
+	if (headers.Date != NULL) {
+		offset = sprintf(&out[index], "Date: %s", headers.Date);
+		index += offset;
+	}
+	if (headers.Pragma != NULL) {
+		offset = sprintf(&out[index], "Pragma: %s", headers.Pragma);
+		index += offset;
+	}
+	if (headers.Trailer != NULL) {
+		offset = sprintf(&out[index], "Trailer: %s", headers.Trailer);
+		index += offset;
+	}
+	if (headers.Transfer_Encoding != NULL) {
+		offset = sprintf(&out[index], "Transfer_Encoding: %s", headers.Transfer_Encoding);
+		index += offset;
+	}
+	if (headers.Upgrade != NULL) {
+		offset = sprintf(&out[index], "Upgrade: %s", headers.Upgrade);
+		index += offset;
+	}
+	if (headers.Via != NULL) {
+		offset = sprintf(&out[index], "Via: %s", headers.Via);
+		index += offset;
+	}
+	if (headers.Warning != NULL) {
+		offset = sprintf(&out[index], "Warning: %s", headers.Warning);
+		index += offset;
+	}
+	return index; 
 }

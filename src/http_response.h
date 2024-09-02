@@ -87,7 +87,7 @@ struct HttpResponse {
 	size_t s_body;
 };
 
-struct HttpResponse create_response(enum STATUS_CODE status_code, char *body, size_t s_body);
+int create_response(enum STATUS_CODE status_code, char *body, size_t s_body, char *out, int out_max_len);
 
 // void send_response(int status_code, char *body, size_t s_body);
 
