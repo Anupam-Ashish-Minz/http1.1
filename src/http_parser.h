@@ -2,8 +2,8 @@
 #define _HTTP_PARSER_H
 
 #include "char_array.h"
-#include <stddef.h>
 #include <stdbool.h>
+#include <stddef.h>
 
 enum HTTP_METHOD {
 	GET,
@@ -80,7 +80,7 @@ struct EntityHeaders {
 	char *Allow;
 	char *Content_Encoding;
 	char *Content_Language;
-	char *Content_Length;
+	int Content_Length;
 	char *Content_Location;
 	char *Content_MD5;
 	char *Content_Range;
@@ -91,7 +91,6 @@ struct EntityHeaders {
 	size_t s_Allow;
 	size_t s_Content_Encoding;
 	size_t s_Content_Language;
-	size_t s_Content_Length;
 	size_t s_Content_Location;
 	size_t s_Content_MD5;
 	size_t s_Content_Range;

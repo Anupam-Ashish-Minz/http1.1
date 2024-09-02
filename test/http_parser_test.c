@@ -64,7 +64,8 @@ void test_parse_post_request() {
 	ASSERT_EQ_STR(request.request_headers.User_Agent, "curl/8.6.0");
 	ASSERT_EQ_STR(request.request_headers.Accept, "*/*");
 	ASSERT_EQ_STR(request.entity_headers.Content_Type, "application/json");
-	ASSERT_EQ_STR(request.entity_headers.Content_Length, "61");
+	// ASSERT_EQ_STR(request.entity_headers.Content_Length, "61");
+	ASSERT_EQ(request.entity_headers.Content_Length, 61);
 
 	dealloc_request(&request);
 }

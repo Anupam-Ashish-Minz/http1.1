@@ -175,11 +175,6 @@ int dealloc_entity_headers(struct EntityHeaders *entity_headers) {
 		entity_headers->Content_Language = NULL;
 		entity_headers->s_Content_Language = 0;
 	}
-	if (entity_headers->Content_Length) {
-		free(entity_headers->Content_Length);
-		entity_headers->Content_Length = NULL;
-		entity_headers->s_Content_Length = 0;
-	}
 	if (entity_headers->Content_Location) {
 		free(entity_headers->Content_Location);
 		entity_headers->Content_Location = NULL;

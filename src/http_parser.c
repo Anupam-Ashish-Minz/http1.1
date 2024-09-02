@@ -136,7 +136,7 @@ struct EntityHeaders init_entity_headers() {
 	entity_headers.Allow = NULL;
 	entity_headers.Content_Encoding = NULL;
 	entity_headers.Content_Language = NULL;
-	entity_headers.Content_Length = NULL;
+	entity_headers.Content_Length = 0;
 	entity_headers.Content_Location = NULL;
 	entity_headers.Content_MD5 = NULL;
 	entity_headers.Content_Range = NULL;
@@ -147,7 +147,6 @@ struct EntityHeaders init_entity_headers() {
 	entity_headers.s_Allow = 0;
 	entity_headers.s_Content_Encoding = 0;
 	entity_headers.s_Content_Language = 0;
-	entity_headers.s_Content_Length = 0;
 	entity_headers.s_Content_Location = 0;
 	entity_headers.s_Content_MD5 = 0;
 	entity_headers.s_Content_Range = 0;
@@ -414,10 +413,11 @@ int parse_header(char *header, size_t s_header,
 			entity_headers->s_Content_Language = s_header_body + 1;
 		}
 		if (str_CIEQ(header_name, "Content-Length", s_header_name, strlen("Content-Length"))) {
-			entity_headers->Content_Length = (char *)malloc(s_header_body + 1);
-			strncpy(entity_headers->Content_Length, header_body, s_header_body);
-			entity_headers->Content_Length[s_header_body] = '\0';
-			entity_headers->s_Content_Length = s_header_body + 1;
+			char *cstr_content_length = (char *)malloc(s_header_body + 1);
+			strncpy(cstr_content_length, header_body, s_header_body);
+			cstr_content_length[s_header_body] = '\0';
+			entity_headers->Content_Length = atoi(cstr_content_length);
+			free(cstr_content_length);
 		}
 		if (str_CIEQ(header_name, "Content-Location", s_header_name, strlen("Content-Location"))) {
 			entity_headers->Content_Location = (char *)malloc(s_header_body + 1);
