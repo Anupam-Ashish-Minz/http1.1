@@ -58,7 +58,14 @@ int create_response(enum STATUS_CODE status_code, char *body,
 int stringify_response_headers(struct ResponseHeaders headers, char *out, int index, size_t out_max_len) {
 	int offset;
 	STRINGIFY_KV("Accept-Ranges", headers.Accept_Ranges, headers.s_Accept_Ranges);
-	unsigned int Age; // TODO add condition about it later
+	headers.Age = 86400; // TODO add condition about it later
+	if (headers.Age != 0) {
+		if (index + 11 > (int)out_max_len) {
+			return -1;
+		}
+		offset = sprintf(&out[index], "Age: %d\r\n", headers.Age);
+		index += offset;
+	}
 	STRINGIFY_KV("Etag", headers.Etag, headers.s_Etag);
 	STRINGIFY_KV("Location", headers.Location, headers.s_Location);
 	STRINGIFY_KV("Proxy-Authenticate", headers.Proxy_Authenticate, headers.s_Proxy_Authenticate);

@@ -50,9 +50,21 @@ void test_entity_headers_stringification() {
 	ASSERT_EQ(out_i, 30);
 }
 
+void test_response_headers_stringification() {
+	struct ResponseHeaders response_headers = init_response_headers();
+	response_headers.Location = "http://www.w3.org/pub/WWW/People.html";
+	char *out = (char *)malloc(62);
+	int out_i = stringify_response_headers(response_headers, out, 0, 62);
+	ASSERT_NEQ(out_i, -1);
+	ASSERT_EQ_STR(out, "Age: 86400\r\nLocation: http://www.w3.org/pub/WWW/People.html");
+	ASSERT_EQ(out_i, 62);
+	free(out);
+}
+
 int main() {
 	test_header_stringification();
 	test_multi_header_stringification();
 	test_outof_bound_check();
+	test_response_headers_stringification();
 	return 0;
 }

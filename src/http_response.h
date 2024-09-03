@@ -89,6 +89,8 @@ struct HttpResponse {
 
 int create_response(enum STATUS_CODE status_code, char *body, size_t s_body, char *out, int out_max_len);
 
+struct ResponseHeaders init_response_headers();
+
 int stringify_response_headers(struct ResponseHeaders headers, char *out, int index, size_t out_max_len);
 
 #endif
