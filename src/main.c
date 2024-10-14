@@ -49,10 +49,9 @@ hey";
 		if ((client = accept(server, NULL, NULL)) < 0) {
 			perror("accept");
 		}
+		printf("processing request....\n");
 
-		// write(STDOUT_FILENO, res, strlen(res));
 		write(client, res, strlen(res));
-		// close(client);
 	}
 	close(client);
 	close(server);
