@@ -41,13 +41,18 @@ int main() {
 		return -1;
 	}
 
-	const char *res = "HTTP/1.1 200 OK\r\n\r\n";
+	const char *res = "HTTP/1.1 200 OK\r\n\
+Content-Length: 3\r\n\r\n\
+hey";
+
 	while (1) {
 		if ((client = accept(server, NULL, NULL)) < 0) {
 			perror("accept");
 		}
 
+		// write(STDOUT_FILENO, res, strlen(res));
 		write(client, res, strlen(res));
+		// close(client);
 	}
 	close(client);
 	close(server);
