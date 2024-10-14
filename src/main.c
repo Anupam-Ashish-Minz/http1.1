@@ -7,49 +7,49 @@
 #include "char_array.h"
 #include "http_parser.h"
 
-#define PORT 4000
+#define PORT 6262
 #define MSBUF_MXLEN 1048576
 
 int main() {
 	int server, client;
 	struct sockaddr_in addr;
-	unsigned int addrlen = sizeof(addr);
+	socklen_t addrlen;
 	int opt = 1;
-	char *buf = (char *)malloc(MSBUF_MXLEN);
 
-	if ((server = socket(AF_INET, SOCK_STREAM, 0)) == -1) {
-		perror("creating socket");
+	if ((server = socket(AF_INET, SOCK_STREAM, 0)) < 0) {
+		perror("socket failed");
 		return -1;
 	}
 
+	if (setsockopt(server, SOL_SOCKET, SO_REUSEADDR | SO_REUSEPORT, &opt, sizeof(opt)) != 0) {
+		perror("socket option");
+	}
+
 	addr.sin_family = AF_INET;
-	addr.sin_addr.s_addr = htons(INADDR_ANY);
+	addr.sin_addr.s_addr = INADDR_ANY;
 	addr.sin_port = htons(PORT);
 
-	setsockopt(server, SOL_SOCKET, SO_REUSEADDR | SO_REUSEPORT, &opt, sizeof(opt));
+	addrlen = sizeof(addr);
 
-	if ((bind(server, (struct sockaddr *)&addr, addrlen)) == -1) {
+	if (bind(server, (struct sockaddr *)&addr, addrlen) < 0) {
 		perror("bind");
 		return -1;
 	}
 
-	if ((listen(server, 15)) == -1) {
+	if (listen(server, 3) < 0) {
 		perror("listen");
 		return -1;
 	}
 
+	const char *res = "HTTP/1.1 200 OK\r\n\r\n";
 	while (1) {
-		if ((client = accept(server, (struct sockaddr *)&addr, &addrlen)) == -1) {
+		if ((client = accept(server, NULL, NULL)) < 0) {
 			perror("accept");
 		}
-		size_t msg_size = read(client, buf, MSBUF_MXLEN);
-		// parse_http(buf, msg_size);
 
-		printf("%s\n", buf);
-		write(client, "hi", 2);
-		close(client);
+		write(client, res, strlen(res));
 	}
-
+	close(client);
 	close(server);
 
 	return 0;
