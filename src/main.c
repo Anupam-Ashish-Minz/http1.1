@@ -2,6 +2,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <pthread.h>
 #include <netinet/in.h>
 #include <sys/socket.h>
 #include "char_array.h"
@@ -9,6 +10,24 @@
 
 #define PORT 6262
 #define MSBUF_MXLEN 1048576
+
+void *process_req(void *args) {
+	int *server_fd = (int *)args;
+	int client;
+	if ((client = accept(*server_fd, NULL, NULL)) < 0) {
+		perror("accept");
+	}
+
+	const char *res = "HTTP/1.1 200 OK\r\n\
+Content-Length: 3\r\n\r\n\
+hey";
+
+	printf("process thread 1...");
+
+	write(client, res, strlen(res));
+
+	return NULL;
+}
 
 int main() {
 	int server, client;
@@ -46,13 +65,11 @@ int main() {
 Content-Length: 3\r\n\r\n\
 hey";
 
-	while (1) {
-		if ((client = accept(server, NULL, NULL)) < 0) {
-			perror("accept");
-		}
-		printf("processing request....\n");
+	pthread_t t1;
 
-		write(client, res, strlen(res));
+	while (1) {
+		pthread_create(&t1, NULL, &process_req, (void *)&server);
+		pthread_join(t1, NULL);
 	}
 	close(client);
 	close(server);
