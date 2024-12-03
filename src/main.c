@@ -35,6 +35,7 @@ int main() {
 		perror("bind");
 		return -1;
 	}
+	printf("Listering http://localhost:%d\n", PORT);
 
 	if (listen(server, 3) < 0) {
 		perror("listen");
