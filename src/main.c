@@ -10,6 +10,19 @@
 
 #define PORT 6262
 #define MSBUF_MXLEN 1048576
+#define MAX_THREADS 16
+
+pthread_mutex_t resource;
+
+void *do_task() {
+	pthread_mutex_lock(&resource);
+	printf("doing something...\n");
+	sleep(3);
+	printf("done\n");
+	pthread_mutex_unlock(&resource);
+	return NULL;
+}
+
 
 void *process_req(void *args) {
 	int *server_fd = (int *)args;
@@ -21,8 +34,6 @@ void *process_req(void *args) {
 	const char *res = "HTTP/1.1 200 OK\r\n\
 Content-Length: 3\r\n\r\n\
 hey";
-
-	printf("process thread 1...");
 
 	write(client, res, strlen(res));
 
@@ -65,14 +76,20 @@ int main() {
 Content-Length: 3\r\n\r\n\
 hey";
 
-	pthread_t t1;
+	pthread_t threads[MAX_THREADS];
+	pthread_mutex_init(&resource, NULL);
+	pthread_create(&threads[0], NULL, &do_task, NULL);
+	pthread_create(&threads[1], NULL, &do_task, NULL);
+
 
 	while (1) {
-		pthread_create(&t1, NULL, &process_req, (void *)&server);
-		pthread_join(t1, NULL);
+		process_req((void *)&server);
 	}
+
 	close(client);
 	close(server);
+	pthread_join(threads[0], NULL);
+	pthread_join(threads[1], NULL);
 
 	return 0;
 }
