@@ -32,8 +32,8 @@ void *process_req(void *args) {
 	}
 
 	const char *res = "HTTP/1.1 200 OK\r\n\
-Content-Length: 3\r\n\r\n\
-hey";
+Content-Length: 4\r\n\r\n\
+hey\n";
 
 	write(client, res, strlen(res));
 
