@@ -12,17 +12,71 @@
 #define MSBUF_MXLEN 1048576
 #define MAX_THREADS 16
 
-pthread_mutex_t resource;
+#define THREAD_TASK_QUEUE_SIZE_MAX 1024
 
-void *do_task() {
-	pthread_mutex_lock(&resource);
-	printf("doing something...\n");
-	sleep(3);
-	printf("done\n");
-	pthread_mutex_unlock(&resource);
-	return NULL;
+typedef struct ThreadTask {
+	void (*callback) (void *args);
+	void *args;
+} thread_task_t;
+
+typedef struct ThreadTaskQueue {
+	thread_task_t *tasks;
+	int front;
+	int back;
+} thread_task_queue_t;
+
+thread_task_queue_t *thread_task_queue_init() {
+	thread_task_queue_t *queue = (thread_task_queue_t *)malloc(sizeof(thread_task_queue_t));
+	queue->tasks = (thread_task_t *)malloc(sizeof(thread_task_t) * THREAD_TASK_QUEUE_SIZE_MAX);
+	queue->front = -1;
+	queue->back = -1;
+	return queue;
 }
 
+int thread_task_queue_add(thread_task_queue_t *queue, thread_task_t *task) {
+	if (queue->front == -1 && queue->back == -1) {
+		queue->front = 0;
+		queue->back = 0;
+		if (THREAD_TASK_QUEUE_SIZE_MAX <= queue->back) {
+			queue->front = -1;
+			queue->back = -1;
+			return -1;
+		}
+		queue->tasks[queue->back] = *task;
+		++queue->back;
+		return 0;
+	}
+	if (queue->front < queue->back && queue->back < THREAD_TASK_QUEUE_SIZE_MAX) {
+		queue->tasks[queue->back] = *task;
+		++queue->back;
+		return 0;
+	}
+	if (queue->front < queue->back && queue->back >= THREAD_TASK_QUEUE_SIZE_MAX) {
+		queue->back = 0;
+	}
+	if (queue->front == queue->back) {
+		fprintf(stderr, "Task Queue Error: Failed to add new values to queue, queue is full");
+		return -1;
+	}
+	if (queue->front > queue->back) {
+		queue->tasks[queue->back] = *task;
+		++queue->back;
+	}
+	return 0;
+}
+
+thread_task_t *thread_task_queue_pull(thread_task_queue_t *queue) {
+	if (queue->front >= THREAD_TASK_QUEUE_SIZE_MAX) {
+		queue->front = 0;
+	}
+	if (queue->front == queue->back) {
+		++queue->back;
+		return NULL;
+	}
+	thread_task_t *task = &queue->tasks[queue->front];
+	++queue->front;
+	return task;
+}
 
 void *process_req(void *args) {
 	int *server_fd = (int *)args;
@@ -76,11 +130,6 @@ int main() {
 Content-Length: 3\r\n\r\n\
 hey";
 
-	pthread_t threads[MAX_THREADS];
-	pthread_mutex_init(&resource, NULL);
-	pthread_create(&threads[0], NULL, &do_task, NULL);
-	pthread_create(&threads[1], NULL, &do_task, NULL);
-
 
 	while (1) {
 		process_req((void *)&server);
@@ -88,8 +137,6 @@ hey";
 
 	close(client);
 	close(server);
-	pthread_join(threads[0], NULL);
-	pthread_join(threads[1], NULL);
 
 	return 0;
 }
