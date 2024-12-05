@@ -32,7 +32,9 @@ int thread_task_queue_add(thread_task_queue_t *queue, thread_task_t *task) {
 		queue->back = 0;
 	}
 	if (queue->front == queue->back) {
-		fprintf(stderr, "Task Queue Error: Failed to add new values to queue, queue is full");
+		fprintf(stderr, "Task Queue Error: Failed to add new values to queue, queue is full\n"
+	  "Queue front: %d, Queue back: %d, Queue size: %d\n", queue->front, queue->back, THREAD_TASK_QUEUE_SIZE_MAX
+	  );
 		return -1;
 	}
 	if (queue->front > queue->back) {
