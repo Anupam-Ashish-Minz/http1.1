@@ -44,6 +44,13 @@ add_executable(
 		src/http_headers.c
 )
 
+add_executable(
+		thread_task_queue_test
+		test/thread_task_queue_test.c
+		src/thread_task_queue.c
+)
+
 add_test(NAME TestCharArray COMMAND char_array_test)
 add_test(NAME TestHttpParser COMMAND http_parser_test)
 add_test(NAME TestHttpResponse COMMAND http_response_test)
+add_test(NAME TestThreadTaskQueue COMMAND thread_task_queue_test)
