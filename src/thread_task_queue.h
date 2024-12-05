@@ -1,7 +1,7 @@
 #ifndef _THREAD_TASK_QUEUE_H
 #define _THREAD_TASK_QUEUE_H
 
-#define THREAD_TASK_QUEUE_SIZE_MAX 1024
+#define THREAD_TASK_QUEUE_SIZE_MAX 4
 
 typedef struct ThreadTask {
 	void (*callback) (void *args);
