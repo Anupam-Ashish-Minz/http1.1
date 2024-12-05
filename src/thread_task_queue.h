@@ -12,9 +12,10 @@ typedef struct ThreadTaskQueue {
 	thread_task_t *tasks;
 	int front;
 	int back;
+	int size;
 } thread_task_queue_t;
 
-thread_task_queue_t *thread_task_queue_init();
+thread_task_queue_t *thread_task_queue_init(int size);
 
 int thread_task_queue_add(thread_task_queue_t *queue, thread_task_t *task);
 
