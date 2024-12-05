@@ -2,7 +2,7 @@
 #define _THREAD_TASK_QUEUE_H
 
 typedef struct ThreadTask {
-	void (*callback) (void *args);
+	void *(*callback) (void *args);
 	void *args;
 } thread_task_t;
 

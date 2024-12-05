@@ -7,6 +7,7 @@
 #include <sys/socket.h>
 #include "char_array.h"
 #include "http_parser.h"
+#include "thread_task_queue.h"
 
 #define PORT 6262
 #define MSBUF_MXLEN 1048576
@@ -64,6 +65,7 @@ int main() {
 Content-Length: 3\r\n\r\n\
 hey";
 
+	thread_task_queue_t *queue = thread_task_queue_init(8);
 
 	while (1) {
 		process_req((void *)&server);
