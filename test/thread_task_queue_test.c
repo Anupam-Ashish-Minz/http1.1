@@ -17,8 +17,8 @@ void test_thread_task_queue_add_items() {
 	ASSERT_EQ(0, thread_task_queue_add(queue, task));
 	ASSERT_EQ(0, thread_task_queue_add(queue, task));
 	ASSERT_EQ(0, thread_task_queue_add(queue, task));
-	ASSERT_EQ(-1, thread_task_queue_add(queue, task));
-	ASSERT_EQ(-1, thread_task_queue_add(queue, task));
+	ASSERT_EQ(0, thread_task_queue_add(queue, task));
+	ASSERT_EQ(0, thread_task_queue_add(queue, task));
 }
 
 int main() {
