@@ -5,7 +5,7 @@
 thread_task_queue_t *thread_task_queue_init(int size) {
 	thread_task_queue_t *queue = (thread_task_queue_t *)malloc(sizeof(thread_task_queue_t));
 	queue->size = size;
-	queue->tasks = (thread_task_t *)malloc(sizeof(thread_task_t) * queue->size);
+	queue->tasks = (thread_task_t **)malloc(sizeof(thread_task_t) * queue->size);
 	queue->front = -1;
 	queue->back = -1;
 	return queue;
@@ -20,12 +20,12 @@ int thread_task_queue_add(thread_task_queue_t *queue, thread_task_t *task) {
 			queue->back = -1;
 			return -1;
 		}
-		queue->tasks[queue->back] = *task;
+		queue->tasks[queue->back] = task;
 		++queue->back;
 		return 0;
 	}
 	if (queue->front < queue->back && queue->back < queue->size) {
-		queue->tasks[queue->back] = *task;
+		queue->tasks[queue->back] = task;
 		++queue->back;
 		return 0;
 	}
@@ -40,7 +40,7 @@ int thread_task_queue_add(thread_task_queue_t *queue, thread_task_t *task) {
 		return -1;
 	}
 	if (queue->front > queue->back) {
-		queue->tasks[queue->back] = *task;
+		queue->tasks[queue->back] = task;
 		++queue->back;
 	}
 	return 0;
@@ -54,7 +54,7 @@ thread_task_t *thread_task_queue_pull(thread_task_queue_t *queue) {
 		++queue->back;
 		return NULL;
 	}
-	thread_task_t *task = &queue->tasks[queue->front];
+	thread_task_t *task = queue->tasks[queue->front];
 	++queue->front;
 	return task;
 }

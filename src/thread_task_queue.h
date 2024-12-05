@@ -9,7 +9,7 @@ typedef struct ThreadTask {
 } thread_task_t;
 
 typedef struct ThreadTaskQueue {
-	thread_task_t *tasks;
+	thread_task_t **tasks;
 	int front;
 	int back;
 	int size;
