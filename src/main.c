@@ -8,6 +8,7 @@
 #include "char_array.h"
 #include "http_parser.h"
 #include "thread_task_queue.h"
+#include "thread_pool.h"
 
 #define PORT 6262
 #define MSBUF_MXLEN 1048576
@@ -59,6 +60,8 @@ int main() {
 	const char *res = "HTTP/1.1 200 OK\r\n\
 Content-Length: 3\r\n\r\n\
 hey";
+
+	thread_pool_t *pool = thread_pool_init(4);
 
 	while (1) {
 		if ((client = accept(server, NULL, NULL)) < 0) {
