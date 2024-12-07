@@ -14,17 +14,12 @@
 #define MAX_THREADS 16
 
 void *process_req(void *args) {
-	int *server_fd = (int *)args;
-	int client;
-	if ((client = accept(*server_fd, NULL, NULL)) < 0) {
-		perror("accept");
-	}
-
+	int client_fd = *(int *)args;
 	const char *res = "HTTP/1.1 200 OK\r\n\
 Content-Length: 4\r\n\r\n\
 hey\n";
 
-	write(client, res, strlen(res));
+	write(client_fd, res, strlen(res));
 
 	return NULL;
 }
@@ -66,7 +61,10 @@ Content-Length: 3\r\n\r\n\
 hey";
 
 	while (1) {
-		process_req((void *)&server);
+		if ((client = accept(server, NULL, NULL)) < 0) {
+			perror("accept");
+		}
+		process_req((void *)&client);
 	}
 
 	close(client);
