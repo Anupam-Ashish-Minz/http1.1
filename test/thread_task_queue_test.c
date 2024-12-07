@@ -68,6 +68,22 @@ void test_thread_task_queue_pull_null() {
 }
 
 
+void test_thread_task_queue_pull_null2() {
+	thread_task_queue_t *queue = thread_task_queue_init(4);
+	thread_task_queue_add(queue, NULL, NULL);
+	thread_task_t *task = thread_task_queue_pull(queue);
+	if (task == NULL) {
+		fprintf(stderr, "Thread task should not be null\n");
+		exit(-1);
+	}
+	task = thread_task_queue_pull(queue);
+	if (task != NULL) {
+		fprintf(stderr, "Thread task should be null");
+		exit(-1);
+	}
+}
+
+
 int main() {
 	test_thread_init();
 	test_thread_task_queue_add_items();
@@ -76,5 +92,6 @@ int main() {
 	test_thread_task_queue_pull();
 	test_thread_task_queue_pull_muliple();
 	test_thread_task_queue_pull_null();
+	test_thread_task_queue_pull_null2();
 	return 0;
 }
