@@ -19,6 +19,7 @@ add_executable(
 		src/http_headers.c
 		src/dealloc_http_request.c
 		src/thread_task_queue.c
+		src/thread_pool.c
 )
 
 add_executable(

@@ -44,7 +44,7 @@ void test_thread_task_queue_pull() {
 	thread_task_queue_t *queue = thread_task_queue_init(4);
 	thread_task_queue_add(queue, NULL, (void *)1234);
 	thread_task_t *task = thread_task_queue_pull(queue);
-	ASSERT_EQ(1234, (int)task->args);
+	ASSERT_EQ(1234, (long int)task->args);
 }
 
 void test_thread_task_queue_pull_muliple() {
@@ -52,9 +52,19 @@ void test_thread_task_queue_pull_muliple() {
 	thread_task_queue_add(queue, NULL, (void *)1234);
 	thread_task_queue_add(queue, NULL, (void *)3456);
 	thread_task_t *task = thread_task_queue_pull(queue);
-	ASSERT_EQ(1234, (int)task->args);
+	ASSERT_EQ(1234, (long int)task->args);
 	task = thread_task_queue_pull(queue);
-	ASSERT_EQ(3456, (int)task->args);
+	ASSERT_EQ(3456, (long int)task->args);
+}
+
+
+void test_thread_task_queue_pull_null() {
+	thread_task_queue_t *queue = thread_task_queue_init(4);
+	thread_task_t *task = thread_task_queue_pull(queue);
+	if (task != NULL) {
+		fprintf(stderr, "thread task queue pull not implemented correctly error");
+		exit(-1);
+	}
 }
 
 
@@ -65,5 +75,6 @@ int main() {
 	test_thread_task_queue_overflow2();
 	test_thread_task_queue_pull();
 	test_thread_task_queue_pull_muliple();
+	test_thread_task_queue_pull_null();
 	return 0;
 }

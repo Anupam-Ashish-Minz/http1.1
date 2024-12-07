@@ -65,8 +65,6 @@ int main() {
 Content-Length: 3\r\n\r\n\
 hey";
 
-	thread_task_queue_t *queue = thread_task_queue_init(8);
-
 	while (1) {
 		process_req((void *)&server);
 	}
