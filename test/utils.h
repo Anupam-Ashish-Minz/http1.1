@@ -5,13 +5,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define ASSERT_EQ(a, b)                                                        \
-	if (a != b) {                                                              \
-		fprintf(stderr, "Assert failed: %s, %s\nactual: %d, expected: %d\n",   \
-				#a, #b, a, b);                                                 \
-		exit(-1);                                                              \
-	}
-
 #define ASSERT_EQ_STR(a, b)                                                    \
 	if (strlen(a) < strlen(b)) {                                               \
 		fprintf(stderr,                                                        \
@@ -35,5 +28,23 @@
 				#b, a);                                                        \
 		exit(-1);                                                              \
 	}
+
+#define ASSERT_EQ_INT32(a, b) \
+	if (a != b) { \
+		fprintf(stderr, "Assert falied: %s, %s\nactual: %d, expected: %d\n", \
+			#a, #b, a, b); \
+		exit(-1); \
+	}
+
+#define ASSERT_EQ_INT64(a, b) \
+	if (a != b) { \
+		fprintf(stderr, "Assert falied: %s, %s\nactual: %ld, expected: %ld\n", \
+			#a, #b, a, b); \
+		exit(-1); \
+	}
+
+#define ASSERT_EQ(a, b) \
+	ASSERT_EQ_INT32(a, b)
+	
 
 #endif
