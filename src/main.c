@@ -68,9 +68,9 @@ hey";
 			perror("accept");
 		}
 		process_req((void *)&client);
+		close(client);
 	}
 
-	close(client);
 	close(server);
 
 	return 0;
