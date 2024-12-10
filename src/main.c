@@ -67,7 +67,8 @@ hey";
 		if ((client = accept(server, NULL, NULL)) < 0) {
 			perror("accept");
 		}
-		process_req((void *)&client);
+		thread_pool_add_job(pool, process_req, (void *)&client);
+		thread_pool_process_jobs(pool);
 		close(client);
 	}
 

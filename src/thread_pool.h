@@ -1,7 +1,7 @@
 #ifndef _THREAD_POOL_H
 #define _THREAD_POOL_H
 
-#define THREAD_COUNT 8
+#define THREAD_COUNT 2
 
 typedef struct ThreadPool {
 	pthread_mutex_t lock;

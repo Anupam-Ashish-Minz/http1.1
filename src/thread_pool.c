@@ -10,11 +10,11 @@ void *thread_process_job(void *args) {
 	while(true) {
 		pthread_mutex_lock(&pool->lock);
 		thread_task_t *task = thread_task_queue_pull(pool->queue);
+		pthread_mutex_unlock(&pool->lock);
 		if (task == NULL) {
 			return NULL;
 		}
 		task->callback(task->args);
-		pthread_mutex_unlock(&pool->lock);
 	}
 }
 
