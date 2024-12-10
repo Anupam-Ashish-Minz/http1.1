@@ -5,7 +5,7 @@
 #include "thread_task_queue.h"
 #include "thread_pool.h"
 
-void *thread_pool_process_job(void *args) {
+void *thread_process_job(void *args) {
 	thread_pool_t *pool = (thread_pool_t *)args;
 	while(true) {
 		pthread_mutex_lock(&pool->lock);
@@ -29,10 +29,13 @@ void *thread_pool_add_job(thread_pool_t *pool, void *args) {
 thread_pool_t *thread_pool_init(int thread_count) {
 	thread_pool_t *pool = (thread_pool_t *)malloc(sizeof(thread_pool_t));
 	pool->queue = thread_task_queue_init(128);
-	pthread_t thread_ids[THREAD_COUNT];
-	for (int i=0; i<THREAD_COUNT; i++) {
-		pthread_create(&thread_ids[i], NULL, thread_pool_process_job, (void *)pool);
-		pthread_detach(thread_ids[i]);
-	}
 	return pool;
+}
+
+void *thread_pool_process_jobs(thread_pool_t *pool) {
+	for (int i=0; i<THREAD_COUNT; i++) {
+		pthread_create(&pool->thread_ids[i], NULL, thread_process_job, (void *)pool);
+		pthread_detach(pool->thread_ids[i]);
+	}
+	return NULL;
 }
