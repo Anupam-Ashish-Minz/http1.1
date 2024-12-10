@@ -18,11 +18,10 @@ void *thread_process_job(void *args) {
 	}
 }
 
-void *thread_pool_add_job(thread_pool_t *pool, void *args) {
+void *thread_pool_add_job(thread_pool_t *pool, void *(*callback) (void *args), void *args) {
 	pthread_mutex_lock(&pool->lock);
-	thread_task_t *task = thread_task_queue_pull(pool->queue);
+	thread_task_queue_add(pool->queue, callback, args);
 	pthread_mutex_unlock(&pool->lock);
-	task->callback(task->args);
 	return NULL;
 }
 
