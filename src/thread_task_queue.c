@@ -52,6 +52,11 @@ int thread_task_queue_add(thread_task_queue_t *queue, void *(*callback)(void *ar
 }
 
 thread_task_t *thread_task_queue_pull(thread_task_queue_t *queue) {
+	if (queue->front < queue->back) {
+		thread_task_t *task = queue->tasks[queue->front];
+		++queue->front;
+		return task;
+	}
 	if (queue->front >= queue->size) {
 		queue->front = 0;
 	}

@@ -31,8 +31,8 @@
 
 #define ASSERT_EQ_INT32(a, b) \
 	if (a != b) { \
-		fprintf(stderr, "Assert falied: %s, %s\nactual: %d, expected: %d\n", \
-			#a, #b, a, b); \
+		fprintf(stderr, "Assert falied: file: %s, function: %s, line: %d, %s, %s\nexpected: %d, actual: %d\n", \
+			__FILE__, __FUNCTION__, __LINE__, #a, #b, a, b); \
 		exit(-1); \
 	}
 
