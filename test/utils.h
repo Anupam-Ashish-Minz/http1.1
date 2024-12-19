@@ -31,8 +31,11 @@
 
 #define ASSERT_EQ(a, b) \
 	if ((long)a != (long)b) { \
-		fprintf(stderr, "Assert failed: %s:%d in function: %s for expression ASSERT_EQ_INT32(%s, %s) values expected: %ld, actual: %ld\n", \
-			__FILE__, __LINE__, __FUNCTION__, #a, #b, (long)a, (long)b); \
+		fprintf(stderr, "Assert failed: %s:%d in function: %s for" \
+			  "expression ASSERT_EQ(%s, %s) values" \
+			  "expected: %ld, actual: %ld\n", \
+			__FILE__, __LINE__, __FUNCTION__, #a, #b, (long)a, \
+			(long)b); \
 		exit(-1); \
 	}
 
